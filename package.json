@@ -10,12 +10,10 @@
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
-    "@sanity/vision": "^5.24.0",
     "next": "14.2.35",
     "next-sanity": "^12.4.5",
-    "react": "^18",
-    "react-dom": "^18",
-    "sanity": "^5.24.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "eslint": "^8",
