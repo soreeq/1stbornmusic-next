@@ -1,10 +1,13 @@
 import { client } from '../lib/sanity';
-import { beatsQuery } from '../lib/queries';
+import { beatsQuery, collectionsQuery } from '../lib/queries';
 import BeatStore from '../components/BeatStore';
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const beats = await client.fetch(beatsQuery);
-  return <BeatStore beats={beats} />;
+  const [beats, collections] = await Promise.all([
+    client.fetch(beatsQuery),
+    client.fetch(collectionsQuery),
+  ]);
+  return <BeatStore beats={beats} collections={collections} />;
 }
