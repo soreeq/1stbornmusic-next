@@ -3,8 +3,9 @@ import VideoSlider from './VideoSlider';
 import BioSection from './BioSection';
 import PhotoSlider from './PhotoSlider';
 import BeatCard from './BeatCard';
+import VideoGrid from './VideoGrid';
 
-export default function Projects({ beats, collections, onTabChange, onBuy }) {
+export default function Projects({ beats, collections, videos, onTabChange, onBuy }) {
   const featuredBeats = beats.filter(b => b.isFeatured);
   const hasCollections = collections?.length > 0;
 
@@ -51,6 +52,8 @@ export default function Projects({ beats, collections, onTabChange, onBuy }) {
           </div>
         </div>
       )}
+
+      <VideoGrid videos={videos} />
     </div>
   );
 }

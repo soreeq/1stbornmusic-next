@@ -12,7 +12,7 @@ import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
 
-function StoreInner({ beats, collections }) {
+function StoreInner({ beats, collections, videos }) {
   const [tab, setTab] = useState('projects');
   const [modal, setModal] = useState(null);
   const { toast } = useCart();
@@ -24,7 +24,7 @@ function StoreInner({ beats, collections }) {
       <main className="main">
         <div className="page-wrap">
           {tab === 'projects' && (
-            <Projects beats={beats} collections={collections} onTabChange={setTab} onBuy={setModal} />
+            <Projects beats={beats} collections={collections} videos={videos} onTabChange={setTab} onBuy={setModal} />
           )}
           {tab === 'beats'   && <AllBeats beats={beats} onBuy={setModal} />}
           {tab === 'shop'    && <Shop />}
@@ -42,11 +42,11 @@ function StoreInner({ beats, collections }) {
   );
 }
 
-export default function BeatStore({ beats, collections }) {
+export default function BeatStore({ beats, collections, videos }) {
   return (
     <PlayerProvider beats={beats}>
       <CartProvider>
-        <StoreInner beats={beats} collections={collections} />
+        <StoreInner beats={beats} collections={collections} videos={videos} />
       </CartProvider>
     </PlayerProvider>
   );
