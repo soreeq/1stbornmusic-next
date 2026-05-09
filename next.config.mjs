@@ -6,6 +6,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'soulmanager.pl' },
     ],
   },
+  transpilePackages: ['sanity', '@sanity/ui', '@sanity/vision', 'styled-components'],
 };
 
 export default nextConfig;
