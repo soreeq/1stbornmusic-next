@@ -30,17 +30,16 @@ export default function Nav({ tab, setTab }) {
   return (
     <nav className="nav" ref={navRef}>
       <div className="nav-logo-row">
-        <div style={{ width: '100%', cursor: 'pointer', position: 'relative' }} onClick={() => setTab('projects')}>
+        <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
           <Image
             src="/logo.jpg"
             alt="1stBornMusic"
-            width={1080}
-            height={574}
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            fill
+            style={{ objectFit: 'contain', objectPosition: 'center' }}
             priority
           />
         </div>
-        <button className="cart-btn" onClick={() => setIsOpen(true)}>
+        <button className="cart-btn" style={{ position: 'relative', zIndex: 1 }} onClick={() => setIsOpen(true)}>
           <IconBag /> Cart
           {items.length > 0 && <span className="cart-badge">{items.length}</span>}
         </button>
