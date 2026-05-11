@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '../contexts/CartContext';
 import { IconBag } from './Icons';
@@ -12,24 +12,43 @@ const TABS = [
   { id: 'contact',  label: 'Contact' },
 ];
 
+const LOGO_MAX = 280;
+const LOGO_MIN = 90;
+const SCROLL_RANGE = 250;
+
 export default function Nav({ tab, setTab }) {
   const { items, setIsOpen } = useCart();
   const navRef = useRef(null);
+  const [logoH, setLogoH] = useState(LOGO_MAX);
 
   useEffect(() => {
-    const update = () => {
+    const onScroll = () => {
+      const progress = Math.min(window.scrollY / SCROLL_RANGE, 1);
+      setLogoH(Math.round(LOGO_MAX - progress * (LOGO_MAX - LOGO_MIN)));
+    };
+    const onResize = () => {
       if (navRef.current) {
         document.documentElement.style.setProperty('--nav-h', `${navRef.current.offsetHeight}px`);
       }
     };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    onResize();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
+
+  useEffect(() => {
+    if (navRef.current) {
+      document.documentElement.style.setProperty('--nav-h', `${navRef.current.offsetHeight}px`);
+    }
+  }, [logoH]);
 
   return (
     <nav className="nav" ref={navRef}>
-      <div className="nav-logo-row">
+      <div className="nav-logo-row" style={{ height: logoH }}>
         <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
           <Image
             src="/logo.png"
