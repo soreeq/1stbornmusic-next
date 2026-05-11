@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useCart } from '../contexts/CartContext';
 import { IconBag } from './Icons';
@@ -13,14 +14,33 @@ const TABS = [
 
 export default function Nav({ tab, setTab }) {
   const { items, setIsOpen } = useCart();
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const update = () => {
+      if (navRef.current) {
+        document.documentElement.style.setProperty('--nav-h', `${navRef.current.offsetHeight}px`);
+      }
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   return (
-    <nav className="nav">
+    <nav className="nav" ref={navRef}>
       <div className="nav-logo-row">
-        <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
-          <Image src="/logo.jpg" alt="1stBornMusic" fill style={{ objectFit: 'contain', objectPosition: 'center' }} priority />
+        <div style={{ width: '100%', cursor: 'pointer', position: 'relative' }} onClick={() => setTab('projects')}>
+          <Image
+            src="/logo.jpg"
+            alt="1stBornMusic"
+            width={1080}
+            height={574}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+            priority
+          />
         </div>
-        <button className="cart-btn" style={{ position: 'relative', zIndex: 1 }} onClick={() => setIsOpen(true)}>
+        <button className="cart-btn" onClick={() => setIsOpen(true)}>
           <IconBag /> Cart
           {items.length > 0 && <span className="cart-badge">{items.length}</span>}
         </button>
