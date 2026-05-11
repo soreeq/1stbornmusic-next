@@ -20,6 +20,7 @@ export default function Nav({ tab, setTab }) {
   const { items, setIsOpen } = useCart();
   const navRef = useRef(null);
   const [logoH, setLogoH] = useState(LOGO_MAX);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -36,6 +37,7 @@ export default function Nav({ tab, setTab }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
     onResize();
+    setTimeout(() => setLoaded(true), 60);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
@@ -49,7 +51,7 @@ export default function Nav({ tab, setTab }) {
   }, [logoH]);
 
   return (
-    <nav className="nav" ref={navRef}>
+    <nav className={`nav ${loaded ? 'nav-loaded' : ''}`} ref={navRef}>
       <div className="nav-logo-row" style={{ height: logoH }}>
         <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
           <Image

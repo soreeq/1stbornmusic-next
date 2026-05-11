@@ -1,6 +1,7 @@
 'use client';
 import { usePlayer } from '../contexts/PlayerContext';
 import { IconPlay, IconPause, IconCart } from './Icons';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 function fmtPlays(n) { return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : n; }
 
@@ -18,11 +19,17 @@ const soldStampStyle = {
 
 export default function BeatCard({ beat, index, onBuy }) {
   const { currentBeat, isPlaying, handlePlay } = usePlayer();
+  const [ref, visible] = useScrollReveal(0.08);
   const active = currentBeat?._id === beat._id;
   const sold = beat.status === 'sold';
+  const delay = (index % 4) * 70;
 
   return (
-    <div className={`beat-card ${active ? 'playing' : ''}`} style={{ position: 'relative' }}>
+    <div
+      ref={ref}
+      className={`beat-card scroll-reveal ${visible ? 'visible' : ''} ${active ? 'playing' : ''}`}
+      style={{ position: 'relative', transitionDelay: `${delay}ms` }}
+    >
       {sold && <div style={soldStampStyle}>SOLD</div>}
       <div className="beat-num">#{String(index + 1).padStart(2, '0')} · {fmtPlays(beat.plays)} plays</div>
       <div className="beat-title">{beat.title}</div>

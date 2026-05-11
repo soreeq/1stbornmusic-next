@@ -4,6 +4,7 @@ import BioSection from './BioSection';
 import PhotoSlider from './PhotoSlider';
 import BeatCard from './BeatCard';
 import VideoGrid from './VideoGrid';
+import GlitchTitle from './GlitchTitle';
 
 export default function Projects({ beats, collections, videos, onTabChange, onBuy }) {
   const featuredBeats = beats.filter(b => b.isFeatured);
@@ -22,7 +23,7 @@ export default function Projects({ beats, collections, videos, onTabChange, onBu
         collections.map(col => (
           <div key={col._id} className="section" style={{ paddingTop: 40, borderTop: '1px solid #111' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 6 }}>
-              <div className="section-title">{col.title}</div>
+              <GlitchTitle>{col.title}</GlitchTitle>
               {col.beats?.length > 0 && (
                 <span style={{ fontSize: 10, color: '#333', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   {col.beats.length} beats
@@ -45,7 +46,7 @@ export default function Projects({ beats, collections, videos, onTabChange, onBu
         ))
       ) : (
         <div className="section" style={{ paddingTop: 40 }}>
-          <div className="section-title">Featured Beats</div>
+          <GlitchTitle>Featured Beats</GlitchTitle>
           <div className="section-sub">Top picks from the catalog</div>
           <div className="beats-grid">
             {featuredBeats.map((b, i) => <BeatCard key={b._id} beat={b} index={i} onBuy={onBuy} />)}

@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useRef } from 'react';
 import { usePlayer } from '../contexts/PlayerContext';
 import { IconPlay, IconPause, IconLoop, IconSkipB, IconSkipF, IconVol } from './Icons';
 
@@ -14,13 +15,32 @@ function formatDur(sec) {
 
 export default function AudioPlayer() {
   const { currentBeat, isPlaying, isLooping, progress, duration, volume, togglePlay, handlePrev, handleNext, handleSeek, setIsLooping, setVolume } = usePlayer();
+  const thumbRef = useRef(null);
+  const prevBeatId = useRef(null);
+
+  useEffect(() => {
+    if (currentBeat && currentBeat._id !== prevBeatId.current) {
+      prevBeatId.current = currentBeat._id;
+      const el = thumbRef.current;
+      if (!el) return;
+      el.classList.remove('pulse');
+      void el.offsetWidth;
+      el.classList.add('pulse');
+    }
+  }, [currentBeat]);
 
   return (
     <div className="player">
       <div className="player-beat-info">
         {currentBeat ? (
           <>
-            <div className="player-thumb">{currentBeat.title.slice(0, 2).toUpperCase()}</div>
+            <div
+              ref={thumbRef}
+              className="player-thumb"
+              onAnimationEnd={e => e.currentTarget.classList.remove('pulse')}
+            >
+              {currentBeat.title.slice(0, 2).toUpperCase()}
+            </div>
             <div>
               <div className="player-beat-name">{currentBeat.title}</div>
               <div className="player-beat-bpm">{currentBeat.bpm} BPM · {currentBeat.key}</div>

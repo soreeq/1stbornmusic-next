@@ -1,18 +1,23 @@
 'use client';
 import { useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import GlitchTitle from './GlitchTitle';
 
-function VideoCard({ video }) {
+function VideoCard({ video, index }) {
   const [imgError, setImgError] = useState(false);
+  const [ref, visible] = useScrollReveal(0.08);
   const thumb = imgError
     ? `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`
     : `https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`;
 
   return (
     <a
+      ref={ref}
       href={`https://www.youtube.com/watch?v=${video.videoId}`}
       target="_blank"
       rel="noopener noreferrer"
-      style={{ display: 'block', background: '#0a0a0a', border: '1px solid #1c1c1c', transition: 'border-color 0.15s', textDecoration: 'none' }}
+      className={`scroll-reveal-r ${visible ? 'visible' : ''}`}
+      style={{ display: 'block', background: '#0a0a0a', border: '1px solid #1c1c1c', transition: 'border-color 0.15s, opacity 0.45s ease, transform 0.45s ease', textDecoration: 'none', transitionDelay: `${(index % 3) * 80}ms` }}
       onMouseEnter={e => e.currentTarget.style.borderColor = '#333'}
       onMouseLeave={e => e.currentTarget.style.borderColor = '#1c1c1c'}
     >
@@ -47,12 +52,17 @@ function VideoCard({ video }) {
 }
 
 export default function VideoGrid({ videos }) {
+  const [titleRef, titleVisible] = useScrollReveal(0.3);
   if (!videos?.length) return null;
 
   return (
     <div className="section" style={{ borderTop: '1px solid #111', paddingTop: 40 }}>
-      <div className="section-title">Watch</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
+      <GlitchTitle>Watch</GlitchTitle>
+      <div
+        ref={titleRef}
+        className={`scroll-reveal ${titleVisible ? 'visible' : ''}`}
+        style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}
+      >
         <div className="section-sub" style={{ margin: 0 }}>Latest from the channel</div>
         <a
           href="https://www.youtube.com/@1stMF"
@@ -66,7 +76,7 @@ export default function VideoGrid({ videos }) {
         </a>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 1, background: '#111' }}>
-        {videos.map(v => <VideoCard key={v._id} video={v} />)}
+        {videos.map((v, i) => <VideoCard key={v._id} video={v} index={i} />)}
       </div>
     </div>
   );
