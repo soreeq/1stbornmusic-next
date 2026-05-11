@@ -32,7 +32,7 @@ export default function Nav({ tab, setTab }) {
       <div className="nav-logo-row">
         <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="1stBornMusic"
             fill
             style={{ objectFit: 'contain', objectPosition: 'center' }}
