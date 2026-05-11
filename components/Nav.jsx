@@ -24,7 +24,9 @@ export default function Nav({ tab, setTab }) {
   useEffect(() => {
     const onScroll = () => {
       const progress = Math.min(window.scrollY / SCROLL_RANGE, 1);
-      setLogoH(Math.round(LOGO_MAX - progress * (LOGO_MAX - LOGO_MIN)));
+      const h = Math.round(LOGO_MAX - progress * (LOGO_MAX - LOGO_MIN));
+      setLogoH(h);
+      document.documentElement.style.setProperty('--nav-h', `${h + 42}px`);
     };
     const onResize = () => {
       if (navRef.current) {
