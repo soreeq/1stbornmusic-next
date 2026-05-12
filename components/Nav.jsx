@@ -1,5 +1,4 @@
 'use client';
-import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useCart } from '../contexts/CartContext';
 import { IconBag } from './Icons';
@@ -12,26 +11,12 @@ const TABS = [
   { id: 'contact',  label: 'Contact' },
 ];
 
-const LOGO_H = 280;
-
 export default function Nav({ tab, setTab }) {
   const { items, setIsOpen } = useCart();
-  const navRef = useRef(null);
-
-  useEffect(() => {
-    const onResize = () => {
-      if (navRef.current) {
-        document.documentElement.style.setProperty('--nav-h', `${navRef.current.offsetHeight}px`);
-      }
-    };
-    window.addEventListener('resize', onResize);
-    onResize();
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
 
   return (
-    <nav className="nav nav-loaded" ref={navRef}>
-      <div className="nav-logo-row" style={{ height: LOGO_H }}>
+    <>
+      <header className="nav-logo-section">
         <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
           <Image
             src="/logo.png"
@@ -45,14 +30,14 @@ export default function Nav({ tab, setTab }) {
           <IconBag /> Cart
           {items.length > 0 && <span className="cart-badge">{items.length}</span>}
         </button>
-      </div>
-      <div className="nav-tabs">
+      </header>
+      <nav className="nav nav-loaded">
         {TABS.map(t => (
           <div key={t.id} className={`nav-tab ${tab === t.id ? 'active' : ''}`} onClick={() => setTab(t.id)}>
             {t.label}
           </div>
         ))}
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
