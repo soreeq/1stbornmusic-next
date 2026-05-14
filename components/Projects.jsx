@@ -7,7 +7,6 @@ import VideoGrid from './VideoGrid';
 import GlitchTitle from './GlitchTitle';
 import { useCart } from '../contexts/CartContext';
 import { LICENSES } from './LicenseModal';
-import BigProofMemoriam from './BigProofMemoriam';
 
 const FAQ = [
   ['Can I use the beat commercially?', 'WAV Lease and above include commercial usage rights. MP3 Lease is for non-commercial projects only.'],
@@ -96,8 +95,6 @@ export default function Projects({ beats, collections, videos, onTabChange, onBu
           </div>
         ))}
       </div>
-
-      <BigProofMemoriam />
     </div>
   );
 }

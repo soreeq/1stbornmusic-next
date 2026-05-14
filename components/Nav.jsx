@@ -9,6 +9,7 @@ const TABS = [
   { id: 'gallery',  label: 'Gallery' },
   { id: 'bio',      label: 'Bio' },
   { id: 'contact',  label: 'Contact' },
+  { id: 'legacy',   label: 'Hip-Hop Legacy' },
 ];
 
 export default function Nav({ tab, setTab }) {
