@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function BigProofMemoriam() {
@@ -38,6 +39,7 @@ export default function BigProofMemoriam() {
 
         <div ref={gridRef} className={`mem-grid scroll-reveal ${gridVis ? 'visible' : ''}`}>
           <div className="mem-portrait">
+            <Image src="/big-proof.webp" alt="Big Proof — DeShaun Dupree Holton" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
             <span className="mem-corner tl" />
             <span className="mem-corner br" />
             <span className="mem-archive">ARCHIVE · IRON FIST</span>

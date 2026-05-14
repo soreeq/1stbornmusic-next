@@ -440,7 +440,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .mem-dates-sep { width: 40px; height: 1px; background: #1a1614; flex-shrink: 0; }
 .mem-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: start; margin-bottom: 80px; }
 .mem-portrait { aspect-ratio: 3/4; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.7) 100%), linear-gradient(135deg, rgba(217,43,58,.3), transparent 60%), repeating-linear-gradient(45deg, #1a0a0c 0 8px, #050303 8px 16px); border: 1px solid #1a1614; position: relative; overflow: hidden; }
-.mem-portrait::after { content: 'PORTRAIT — BIG PROOF'; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .3em; color: #6b665d; white-space: nowrap; }
+.mem-portrait::after { content: none; }
 .mem-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .mem-portrait img ~ .mem-portrait::after { display: none; }
 .mem-corner { position: absolute; width: 18px; height: 18px; border: 1px solid var(--accent); }
