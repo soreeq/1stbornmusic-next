@@ -8,7 +8,7 @@ import Projects from './Projects';
 import AllBeats from './AllBeats';
 import BioSection from './BioSection';
 import Gallery from './Gallery';
-import BigProofMemoriam from './BigProofMemoriam';
+import HipHopLegacy from './HipHopLegacy';
 import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
@@ -31,7 +31,7 @@ function StoreInner({ beats, collections, videos, photos }) {
           {tab === 'gallery' && <Gallery photos={photos} />}
           {tab === 'bio'     && <BioSection />}
           {tab === 'contact' && <Contact />}
-          {tab === 'legacy'  && <BigProofMemoriam />}
+          {tab === 'legacy'  && <HipHopLegacy beats={beats} onTabChange={setTab} />}
         </div>
       </main>
 

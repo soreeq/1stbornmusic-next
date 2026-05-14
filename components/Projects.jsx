@@ -1,5 +1,4 @@
 'use client';
-import VideoSlider from './VideoSlider';
 import BioSection from './BioSection';
 import PhotoSlider from './PhotoSlider';
 import BeatCard from './BeatCard';
@@ -22,7 +21,6 @@ export default function Projects({ beats, collections, videos, onTabChange, onBu
 
   return (
     <div>
-      <VideoSlider beats={beats} onTabChange={onTabChange} />
       <BioSection />
 
       <div className="section" style={{ borderTop: '1px solid #111', paddingBottom: 0, display: 'flex', justifyContent: 'center' }}>
