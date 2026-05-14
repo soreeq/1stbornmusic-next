@@ -7,7 +7,8 @@ import AudioPlayer from './AudioPlayer';
 import Projects from './Projects';
 import AllBeats from './AllBeats';
 import Shop from './Shop';
-import Bio from './Bio';
+import BioSection from './BioSection';
+import BigProofMemoriam from './BigProofMemoriam';
 import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
@@ -28,7 +29,7 @@ function StoreInner({ beats, collections, videos }) {
           )}
           {tab === 'beats'   && <AllBeats beats={beats} onBuy={setModal} />}
           {tab === 'shop'    && <Shop />}
-          {tab === 'bio'     && <Bio />}
+          {tab === 'bio'     && <><BioSection /><BigProofMemoriam /></>}
           {tab === 'contact' && <Contact />}
         </div>
       </main>

@@ -1,4 +1,5 @@
 'use client';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const CREDITS = [
   { name: 'Eminem',     role: 'Music Video',        work: '"Toy Soldiers"' },
@@ -9,27 +10,36 @@ const CREDITS = [
 ];
 
 export default function BioSection() {
+  const [headerRef, headerVis]     = useScrollReveal(0.15);
+  const [portraitRef, portraitVis] = useScrollReveal(0.15);
+  const [textRef, textVis]         = useScrollReveal(0.15);
+  const [quoteRef, quoteVis]       = useScrollReveal(0.2);
+  const [statsRef, statsVis]       = useScrollReveal(0.2);
+  const [creditsRef, creditsVis]   = useScrollReveal(0.15);
+
   return (
     <section className="bio-section">
       <div className="bio-section-inner">
-        <div className="bio-eyebrow">
-          <span className="bio-eyebrow-dot" />
-          BIO / FILE NO. 001
-          <span className="bio-eyebrow-rule" />
-          DETROIT, MI
+        <div ref={headerRef} className={`bio-header-block scroll-reveal ${headerVis ? 'visible' : ''}`}>
+          <div className="bio-eyebrow">
+            <span className="bio-eyebrow-dot" />
+            BIO / FILE NO. 001
+            <span className="bio-eyebrow-rule" />
+            DETROIT, MI
+          </div>
+
+          <h2 className="bio-section-title">Cleveland L. Hurd</h2>
+          <p className="bio-section-sub">Known to the world as 1stBorn</p>
         </div>
 
-        <h2 className="bio-section-title">Cleveland L. Hurd</h2>
-        <p className="bio-section-sub">Known to the world as 1stBorn</p>
-
         <div className="bio-ed-grid">
-          <div className="bio-ed-portrait">
+          <div ref={portraitRef} className={`bio-ed-portrait scroll-reveal ${portraitVis ? 'visible' : ''}`}>
             <img src="/cleveland.jpg" alt="Cleveland L. Hurd" />
             <div className="bio-ed-frame-tag">PRESS / B&amp;W</div>
             <div className="bio-ed-scale">6'5&quot;<small>HEIGHT ON RECORD</small></div>
           </div>
 
-          <div>
+          <div ref={textRef} className={`scroll-reveal-r ${textVis ? 'visible' : ''}`}>
             <h3 className="bio-ed-heading">
               A low-key giant from Detroit with a presence that carries the room — <em>and the label.</em>
             </h3>
@@ -48,12 +58,12 @@ export default function BioSection() {
           </div>
         </div>
 
-        <div className="bio-pull-quote">
+        <div ref={quoteRef} className={`bio-pull-quote scroll-reveal ${quoteVis ? 'visible' : ''}`}>
           <q>Low-key personality. Commanding presence. Detroit-born, Iron Fist-raised.</q>
           <div className="bio-pull-src">— Press, on 1stBorn</div>
         </div>
 
-        <div className="bio-stats">
+        <div ref={statsRef} className={`bio-stats ${statsVis ? 'stats-visible' : ''}`}>
           <div className="bio-stat"><span className="bio-stat-num">6'5<small>"</small></span><span className="bio-stat-lbl">Height</span><span className="bio-stat-sub">Low-key giant</span></div>
           <div className="bio-stat"><span className="bio-stat-num">5<small>+</small></span><span className="bio-stat-lbl">Music Videos</span><span className="bio-stat-sub">Eminem · D12 · Obie Trice</span></div>
           <div className="bio-stat"><span className="bio-stat-num">1</span><span className="bio-stat-lbl">Label at the helm</span><span className="bio-stat-sub">Iron Fist Records</span></div>
@@ -64,9 +74,9 @@ export default function BioSection() {
           <span className="bio-credits-lbl">◢ Worked With</span>
           <span className="bio-credits-rule" />
         </div>
-        <div className="bio-credits-grid">
-          {CREDITS.map(c => (
-            <div key={c.name} className="bio-credit">
+        <div ref={creditsRef} className={`bio-credits-grid ${creditsVis ? 'credits-visible' : ''}`}>
+          {CREDITS.map((c, i) => (
+            <div key={c.name} className="bio-credit" style={{ '--i': i }}>
               <span className="bio-credit-name">{c.name}</span>
               <span className="bio-credit-role">{c.role}</span>
               <span className="bio-credit-work">{c.work}</span>
