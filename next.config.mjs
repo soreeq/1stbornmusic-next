@@ -4,6 +4,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.sanity.io' },
       { protocol: 'https', hostname: 'soulmanager.pl' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
     ],
   },
   transpilePackages: ['sanity', '@sanity/ui', '@sanity/vision', 'styled-components'],
