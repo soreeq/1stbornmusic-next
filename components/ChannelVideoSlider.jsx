@@ -1,10 +1,13 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
+
+const SCROLL_STEP = 480;
 
 export default function ChannelVideoSlider({ videos = [] }) {
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const railRef = useRef(null);
 
   if (!videos.length) return null;
 
@@ -13,6 +16,11 @@ export default function ChannelVideoSlider({ videos = [] }) {
   function selectVideo(i) {
     setActive(i);
     setPlaying(false);
+  }
+
+  function scrollRail(dir) {
+    if (!railRef.current) return;
+    railRef.current.scrollBy({ left: dir * SCROLL_STEP, behavior: 'smooth' });
   }
 
   return (
@@ -54,26 +62,30 @@ export default function ChannelVideoSlider({ videos = [] }) {
         )}
       </div>
 
-      <div className="cvs-rail">
-        {videos.map((v, i) => (
-          <button
-            key={v.videoId}
-            className={`cvs-rail-item ${i === active ? 'active' : ''}`}
-            onClick={() => selectVideo(i)}
-          >
-            <div className="cvs-rail-thumb">
-              <Image
-                src={v.thumb}
-                alt={v.title}
-                fill
-                sizes="160px"
-                style={{ objectFit: 'cover' }}
-              />
-              {i === active && playing && <div className="cvs-rail-playing">▶</div>}
-            </div>
-            <span className="cvs-rail-title">{v.title}</span>
-          </button>
-        ))}
+      <div className="cvs-rail-wrap">
+        <button className="cvs-rail-arrow cvs-rail-prev" onClick={() => scrollRail(-1)}>←</button>
+        <div className="cvs-rail" ref={railRef}>
+          {videos.map((v, i) => (
+            <button
+              key={v.videoId}
+              className={`cvs-rail-item ${i === active ? 'active' : ''}`}
+              onClick={() => selectVideo(i)}
+            >
+              <div className="cvs-rail-thumb">
+                <Image
+                  src={v.thumb}
+                  alt={v.title}
+                  fill
+                  sizes="160px"
+                  style={{ objectFit: 'cover' }}
+                />
+                {i === active && playing && <div className="cvs-rail-playing">▶</div>}
+              </div>
+              <span className="cvs-rail-title">{v.title}</span>
+            </button>
+          ))}
+        </div>
+        <button className="cvs-rail-arrow cvs-rail-next" onClick={() => scrollRail(1)}>→</button>
       </div>
     </div>
   );

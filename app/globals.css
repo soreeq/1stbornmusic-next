@@ -410,8 +410,12 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .cvs-play-btn { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 72px; height: 72px; border-radius: 50%; background: rgba(217,43,58,.9); color: #fff; font-size: 24px; display: flex; align-items: center; justify-content: center; padding-left: 4px; transition: transform .2s, background .2s; }
 .cvs-thumb-wrap:hover .cvs-play-btn { transform: translate(-50%,-50%) scale(1.1); background: var(--accent); }
 .cvs-thumb-title { position: absolute; bottom: 20px; left: 24px; right: 24px; font-family: 'UnifrakturMaguntia', serif; font-size: 22px; color: #fff; text-align: left; pointer-events: none; text-shadow: 0 2px 8px rgba(0,0,0,.8); }
-.cvs-rail { display: flex; gap: 1px; background: #111; overflow-x: auto; scrollbar-width: none; }
+.cvs-rail-wrap { position: relative; display: flex; align-items: stretch; background: #111; }
+.cvs-rail { display: flex; gap: 1px; overflow-x: auto; scrollbar-width: none; flex: 1; }
 .cvs-rail::-webkit-scrollbar { display: none; }
+.cvs-rail-arrow { flex-shrink: 0; width: 40px; background: #080808; border: none; border-left: 1px solid #1a1a1a; color: #444; font-size: 16px; cursor: pointer; transition: color .15s, background .15s; z-index: 2; }
+.cvs-rail-prev { border-left: none; border-right: 1px solid #1a1a1a; }
+.cvs-rail-arrow:hover { color: #fff; background: #111; }
 .cvs-rail-item { flex: 0 0 160px; background: #000; border: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; transition: background .15s; }
 .cvs-rail-item:hover, .cvs-rail-item.active { background: #0d0d0d; }
 .cvs-rail-item.active { box-shadow: inset 0 2px 0 var(--accent); }
