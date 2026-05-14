@@ -6,14 +6,14 @@ import Nav from './Nav';
 import AudioPlayer from './AudioPlayer';
 import Projects from './Projects';
 import AllBeats from './AllBeats';
-import Shop from './Shop';
 import BioSection from './BioSection';
 import BigProofMemoriam from './BigProofMemoriam';
+import Gallery from './Gallery';
 import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
 
-function StoreInner({ beats, collections, videos }) {
+function StoreInner({ beats, collections, videos, photos }) {
   const [tab, setTab] = useState('projects');
   const [modal, setModal] = useState(null);
   const { toast } = useCart();
@@ -28,7 +28,7 @@ function StoreInner({ beats, collections, videos }) {
             <Projects beats={beats} collections={collections} videos={videos} onTabChange={setTab} onBuy={setModal} />
           )}
           {tab === 'beats'   && <AllBeats beats={beats} onBuy={setModal} />}
-          {tab === 'shop'    && <Shop />}
+          {tab === 'gallery' && <Gallery photos={photos} />}
           {tab === 'bio'     && <><BioSection /><BigProofMemoriam /></>}
           {tab === 'contact' && <Contact />}
         </div>
@@ -43,11 +43,11 @@ function StoreInner({ beats, collections, videos }) {
   );
 }
 
-export default function BeatStore({ beats, collections, videos }) {
+export default function BeatStore({ beats, collections, videos, photos }) {
   return (
     <PlayerProvider beats={beats}>
       <CartProvider>
-        <StoreInner beats={beats} collections={collections} videos={videos} />
+        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} />
       </CartProvider>
     </PlayerProvider>
   );

@@ -6,7 +6,7 @@ import { IconBag } from './Icons';
 const TABS = [
   { id: 'projects', label: 'Projects' },
   { id: 'beats',    label: 'All Beats' },
-  { id: 'shop',     label: 'Shop' },
+  { id: 'gallery',  label: 'Gallery' },
   { id: 'bio',      label: 'Bio' },
   { id: 'contact',  label: 'Contact' },
 ];
