@@ -1,5 +1,6 @@
 'use client';
 import BioSection from './BioSection';
+import ChannelVideoSlider from './ChannelVideoSlider';
 import PhotoSlider from './PhotoSlider';
 import BeatCard from './BeatCard';
 import VideoGrid from './VideoGrid';
@@ -14,13 +15,14 @@ const FAQ = [
   ['Custom beats?', 'Yes — DM @1st_born313 on Instagram with your references and budget.'],
 ];
 
-export default function Projects({ beats, collections, videos, onTabChange, onBuy }) {
+export default function Projects({ beats, collections, videos, channelVideos, onBuy }) {
   const featuredBeats = beats.filter(b => b.isFeatured);
   const hasCollections = collections?.length > 0;
   const { addToCart } = useCart();
 
   return (
     <div>
+      <ChannelVideoSlider videos={channelVideos} />
       <BioSection />
 
       <div className="section" style={{ borderTop: '1px solid #111', paddingBottom: 0, display: 'flex', justifyContent: 'center' }}>

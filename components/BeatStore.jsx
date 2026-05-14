@@ -13,7 +13,7 @@ import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
 
-function StoreInner({ beats, collections, videos, photos }) {
+function StoreInner({ beats, collections, videos, photos, channelVideos }) {
   const [tab, setTab] = useState('projects');
   const [modal, setModal] = useState(null);
   const { toast } = useCart();
@@ -25,7 +25,7 @@ function StoreInner({ beats, collections, videos, photos }) {
       <main className="main">
         <div className="page-wrap">
           {tab === 'projects' && (
-            <Projects beats={beats} collections={collections} videos={videos} onTabChange={setTab} onBuy={setModal} />
+            <Projects beats={beats} collections={collections} videos={videos} channelVideos={channelVideos} onBuy={setModal} />
           )}
           {tab === 'beats'   && <AllBeats beats={beats} onBuy={setModal} />}
           {tab === 'gallery' && <Gallery photos={photos} />}
@@ -44,11 +44,11 @@ function StoreInner({ beats, collections, videos, photos }) {
   );
 }
 
-export default function BeatStore({ beats, collections, videos, photos }) {
+export default function BeatStore({ beats, collections, videos, photos, channelVideos }) {
   return (
     <PlayerProvider beats={beats}>
       <CartProvider>
-        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} />
+        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} channelVideos={channelVideos} />
       </CartProvider>
     </PlayerProvider>
   );
