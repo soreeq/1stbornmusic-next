@@ -87,7 +87,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
 .beat-card.playing { background: #0d0d0d; }
 .beat-card.playing::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent); }
 .beat-num { font-size: 10px; color: #2a2a2a; font-variant-numeric: tabular-nums; margin-bottom: 14px; letter-spacing: 0.08em; }
-.beat-title { font-family: 'UnifrakturMaguntia', serif; font-size: 22px; letter-spacing: 0.03em; color: #fff; margin-bottom: 6px; }
+.beat-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: 20px; letter-spacing: 0.06em; color: #fff; margin-bottom: 6px; text-transform: uppercase; }
 .beat-meta { display: flex; gap: 12px; font-size: 11px; color: #3a3a3a; margin-bottom: 12px; letter-spacing: 0.04em; }
 .beat-tag { display: inline-block; padding: 2px 7px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-right: 4px; border: 1px solid #222; color: #444; }
 .beat-tag.new { border-color: var(--accent); color: var(--accent); }
@@ -102,7 +102,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
 .beat-row.playing { background: #080808; border-left: 2px solid var(--accent); }
 .beat-row-num { font-size: 11px; color: #2a2a2a; width: 28px; text-align: center; flex-shrink: 0; }
 .beat-row-info { flex: 1; min-width: 0; }
-.beat-row-title { font-family: 'UnifrakturMaguntia', serif; font-size: 18px; letter-spacing: 0.03em; color: #fff; }
+.beat-row-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: 16px; letter-spacing: 0.06em; color: #fff; text-transform: uppercase; }
 .beat-row-meta { font-size: 11px; color: #3a3a3a; display: flex; gap: 10px; margin-top: 2px; }
 .beat-row-tags { display: flex; gap: 4px; flex-wrap: wrap; }
 .beat-row-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
