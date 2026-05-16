@@ -22,8 +22,8 @@ export default function Projects({ beats, collections, videos, channelVideos, on
 
   return (
     <div>
-      <ChannelVideoSlider videos={channelVideos} />
       <BioSection />
+      <ChannelVideoSlider videos={channelVideos} />
 
       <div className="section" style={{ borderTop: '1px solid #111', paddingBottom: 0, display: 'flex', justifyContent: 'center' }}>
         <PhotoSlider />

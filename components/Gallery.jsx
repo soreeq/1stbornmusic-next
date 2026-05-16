@@ -17,7 +17,7 @@ export default function Gallery({ photos = [] }) {
 
   return (
     <>
-      <div className="section">
+      <div className="section gallery-section">
         <div className="section-title">Gallery</div>
         <div className="section-sub">Photos · Press · Behind the scenes</div>
         <div className="gallery-grid">
