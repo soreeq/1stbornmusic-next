@@ -17,10 +17,16 @@ export default function Gallery({ photos = [] }) {
 
   return (
     <>
-      <div className="section">
-        <div className="section-title">Gallery</div>
-        <div className="section-sub">Photos · Press · Behind the scenes</div>
-        <div className="gallery-grid">
+      <div className="gallery-hero">
+        <div className="gallery-hero-eyebrow">1stbornmusic</div>
+        <div className="gallery-hero-title">Gallery</div>
+        <div className="gallery-hero-rule">
+          <span className="gallery-hero-line" />
+          <span className="gallery-hero-sub">Photos · Press · Behind the scenes</span>
+          <span className="gallery-hero-line" />
+        </div>
+      </div>
+      <div className="gallery-grid">
           {photos.map((photo, i) => (
             <button
               key={photo._id}
@@ -42,7 +48,6 @@ export default function Gallery({ photos = [] }) {
               )}
             </button>
           ))}
-        </div>
       </div>
 
       {lightbox !== null && (

@@ -443,6 +443,15 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   .cvs-thumb-title { font-size: 16px; }
 }
 
+/* ─── GALLERY HERO ─── */
+.gallery-hero { position: relative; padding: 80px 64px 72px; text-align: center; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(122,12,28,.3), transparent 70%), #050505; border-bottom: 1px solid #1a1a1a; overflow: hidden; }
+.gallery-hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px); background-size: 64px 64px; pointer-events: none; }
+.gallery-hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.gallery-hero-title { font-family: 'UnifrakturMaguntia', serif; font-size: clamp(72px, 10vw, 140px); line-height: 0.9; color: #f4f1ec; margin-bottom: 32px; }
+.gallery-hero-rule { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.gallery-hero-line { flex: 0 0 60px; height: 1px; background: var(--accent); }
+.gallery-hero-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: #555; }
+
 /* ─── GALLERY ─── */
 .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 .gallery-item { position: relative; aspect-ratio: var(--aspect, 4/3); overflow: hidden; cursor: pointer; background: #0a0a0a; border: none; padding: 0; display: block; }
