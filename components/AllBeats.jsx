@@ -48,8 +48,20 @@ export default function AllBeats({ beats, collections = [], onBuy }) {
         <span className="results-count">{filtered.length} beats</span>
       </div>
       {layout === 'grid'
-        ? <div className="beats-grid">{filtered.map((b, i) => <BeatCard key={b._id} beat={b} index={i} onBuy={onBuy} />)}</div>
-        : <div className="beats-list">{filtered.map((b, i) => <BeatRow key={b._id} beat={b} index={i} onBuy={onBuy} />)}</div>
+        ? <div key={activeCollection ?? 'all'} className="beats-grid">
+            {filtered.map((b, i) => (
+              <div key={b._id} className="beat-anim-wrap" style={{ '--i': Math.min(i, 16) }}>
+                <BeatCard beat={b} index={i} onBuy={onBuy} />
+              </div>
+            ))}
+          </div>
+        : <div key={activeCollection ?? 'all'} className="beats-list">
+            {filtered.map((b, i) => (
+              <div key={b._id} className="beat-anim-wrap" style={{ '--i': Math.min(i, 16) }}>
+                <BeatRow beat={b} index={i} onBuy={onBuy} />
+              </div>
+            ))}
+          </div>
       }
     </div>
   );
