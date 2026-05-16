@@ -108,7 +108,7 @@ input, select, textarea { font-family: inherit; color: inherit; }
 .beat-row-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
 /* FILTER BAR */
-.filter-bar { display: flex; gap: 12px; padding: 20px 64px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #ddd; background: #f0f0f2; }
+.filter-bar { display: flex; gap: 12px; padding: 20px 64px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #111; background: #000; }
 .search-input { flex: 1; min-width: 200px; max-width: 320px; background: #fff; border: 1px solid #ccc; padding: 10px 16px; font-size: 12px; color: #111; outline: none; transition: border-color 0.15s; }
 .search-input:focus { border-color: var(--accent); }
 .search-input::placeholder { color: #aaa; }
