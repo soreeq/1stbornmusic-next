@@ -844,7 +844,8 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 }
 
 /* ── Table view ── */
-.ab-beats-section { max-width: 1360px; margin: 0 auto 80px; padding: 0 64px; }
+.ab-beats-bg { background: #000; }
+.ab-beats-section { max-width: 1360px; margin: 0 auto; padding: 0 64px 80px; }
 .ab-beats-head {
   display: grid;
   grid-template-columns: 60px 1fr 90px 70px 1.2fr 70px 110px 130px;

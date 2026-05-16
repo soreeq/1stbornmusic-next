@@ -178,6 +178,7 @@ export default function AllBeats({ beats, collections = [], onBuy }) {
 
       {/* ── TABLE VIEW ── */}
       {layout === 'table' ? (
+        <div className="ab-beats-bg">
         <div className="ab-beats-section">
           <div className="ab-beats-head">
             <span />
@@ -196,6 +197,7 @@ export default function AllBeats({ beats, collections = [], onBuy }) {
               </div>
             ))}
           </div>
+        </div>
         </div>
       ) : (
         /* ── GRID VIEW ── */
