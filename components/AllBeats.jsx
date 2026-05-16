@@ -3,12 +3,14 @@ import { useState } from 'react';
 import BeatCard from './BeatCard';
 import BeatRow from './BeatRow';
 
-export default function AllBeats({ beats, onBuy }) {
+export default function AllBeats({ beats, collections = [], onBuy }) {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('default');
   const [layout, setLayout] = useState('grid');
+  const [activeCollection, setActiveCollection] = useState(null);
 
   const filtered = beats
+    .filter(b => !activeCollection || b.collection?._id === activeCollection)
     .filter(b => b.title.toLowerCase().includes(search.toLowerCase()) || b.tags?.some(t => t.toLowerCase().includes(search.toLowerCase())))
     .sort((a, b) => {
       if (sortBy === 'bpm-asc')   return a.bpm - b.bpm;
@@ -20,6 +22,16 @@ export default function AllBeats({ beats, onBuy }) {
 
   return (
     <div>
+      {collections.length > 0 && (
+        <div className="collection-tabs">
+          <button className={`col-tab ${!activeCollection ? 'active' : ''}`} onClick={() => setActiveCollection(null)}>All</button>
+          {collections.map(c => (
+            <button key={c._id} className={`col-tab ${activeCollection === c._id ? 'active' : ''}`} onClick={() => setActiveCollection(c._id)}>
+              {c.title}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="filter-bar">
         <input className="search-input" placeholder="Search beats, tags..." value={search} onChange={e => setSearch(e.target.value)} />
         <select className="filter-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>

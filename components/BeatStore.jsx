@@ -27,7 +27,7 @@ function StoreInner({ beats, collections, videos, photos, channelVideos }) {
           {tab === 'projects' && (
             <Projects beats={beats} collections={collections} videos={videos} channelVideos={channelVideos} onBuy={setModal} />
           )}
-          {tab === 'beats'   && <AllBeats beats={beats} onBuy={setModal} />}
+          {tab === 'beats'   && <AllBeats beats={beats} collections={collections} onBuy={setModal} />}
           {tab === 'gallery' && <Gallery photos={photos} />}
           {tab === 'bio'     && <BioSection />}
           {tab === 'contact' && <Contact />}
