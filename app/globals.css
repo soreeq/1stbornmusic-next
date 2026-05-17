@@ -628,10 +628,11 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   background-size: 64px 64px;
   pointer-events: none;
 }
-.ab-hero-inner { max-width: 1360px; margin: 0 auto; position: relative; }
+.ab-hero-inner { max-width: 1360px; margin: 0 auto; position: relative; text-align: center; }
 .ab-eyebrow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
@@ -665,7 +666,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   color: #a39d92;
   margin: 0 0 32px;
 }
-.ab-hero-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+.ab-hero-stats { display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; }
 .ab-stat { display: flex; flex-direction: column; gap: 4px; }
 .ab-stat-k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .3em; color: #6b665d; text-transform: uppercase; }
 .ab-stat-v { font-family: 'Cinzel', serif; font-weight: 700; font-size: 24px; color: var(--accent); }

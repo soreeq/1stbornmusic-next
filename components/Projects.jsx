@@ -86,7 +86,7 @@ export default function Projects({ beats, collections, videos, channelVideos, on
         </div>
       </div>
 
-      <div className="section" style={{ paddingTop: 0, borderTop: '1px solid var(--border)' }}>
+      <div className="section" style={{ paddingTop: 0, borderTop: '1px solid var(--border)', backgroundColor: '#000' }}>
         <div className="section-title" style={{ fontSize: 22 }}>Frequently Asked</div>
         {FAQ.map(([q, a]) => (
           <div key={q} style={{ borderBottom: '1px solid var(--border)', paddingBottom: 20, marginBottom: 20 }}>
