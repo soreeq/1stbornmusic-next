@@ -1370,6 +1370,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 }
 .vault-header-back:hover { color: var(--pt-hi); }
 .vault-main {
+  display: flow-root;
   min-height: 100vh;
   padding-bottom: var(--player-h);
   background:
