@@ -23,6 +23,8 @@ export default function Projects({ beats, collections, videos, channelVideos, on
 
   return (
     <div>
+      <VaultTeaser />
+
       <BioSection />
       <ChannelVideoSlider videos={channelVideos} />
 
@@ -64,8 +66,6 @@ export default function Projects({ beats, collections, videos, channelVideos, on
           </div>
         </div>
       )}
-
-      <VaultTeaser />
 
       <VideoGrid videos={videos} />
 
