@@ -1360,24 +1360,6 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .vault-intro .vault-door-wrap { width: min(64vw, 440px); max-width: 440px; }
 
 /* ── Inside the vault ── */
-.vault-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  padding: 14px 32px;
-  background: rgba(0,0,0,0.94);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid #1c1c22;
-}
-.vault-header-logo {
-  font-family: 'UnifrakturMaguntia', serif;
-  font-size: 26px;
-  color: #fff;
-  white-space: nowrap;
-}
 .vault-header-back {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
@@ -1423,6 +1405,4 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   .vault-title { font-size: 44px; }
   .vault-inside-head { padding: 48px 24px 28px; }
   .vault-grid { margin: 0 24px 64px; }
-  .vault-header { padding: 12px 16px; gap: 16px; }
-  .vault-header-logo { font-size: 20px; }
 }

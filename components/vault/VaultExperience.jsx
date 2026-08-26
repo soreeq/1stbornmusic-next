@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { PlayerProvider } from '../../contexts/PlayerContext';
 import { CartProvider, useCart } from '../../contexts/CartContext';
 import VaultDoor from './VaultDoor';
@@ -13,14 +14,27 @@ import { IconBag } from '../Icons';
 function VaultHeader() {
   const { items, setIsOpen } = useCart();
   return (
-    <header className="vault-header">
-      <a className="vault-header-logo" href="/">1stBornMusic</a>
-      <a className="vault-header-back" href="/">← Back to store</a>
-      <button className="cart-btn" onClick={() => setIsOpen(true)}>
-        <IconBag /> Cart
-        {items.length > 0 && <span className="cart-badge">{items.length}</span>}
-      </button>
-    </header>
+    <>
+      <header className="nav-logo-section">
+        <a href="/" style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} aria-label="1stBornMusic — back to store">
+          <Image
+            src="/logo.png"
+            alt="1stBornMusic"
+            fill
+            style={{ objectFit: 'contain', objectPosition: 'center' }}
+            priority
+          />
+        </a>
+        <button className="cart-btn" style={{ position: 'relative', zIndex: 1 }} onClick={() => setIsOpen(true)}>
+          <IconBag /> Cart
+          {items.length > 0 && <span className="cart-badge">{items.length}</span>}
+        </button>
+      </header>
+      <nav className="nav nav-loaded">
+        <a href="/" className="nav-tab">← Back to Store</a>
+        <span className="nav-tab active" style={{ cursor: 'default' }}>The Vault</span>
+      </nav>
+    </>
   );
 }
 
