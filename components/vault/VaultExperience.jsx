@@ -47,6 +47,9 @@ function VaultInner({ beats }) {
       <VaultHeader />
 
       <main className="vault-main">
+        <div className="vault-hero">
+          <Image src="/vault-interior.jpg" alt="Inside the Vault — reserved stock" fill style={{ objectFit: 'cover' }} priority />
+        </div>
         <div className="page-wrap">
           <div className="vault-inside-head">
             <div className="vault-eyebrow">
