@@ -38,6 +38,7 @@ export default function Nav({ tab, setTab }) {
             {t.label}
           </div>
         ))}
+        <a href="/vault" className="nav-tab nav-tab-vault">The Vault</a>
       </nav>
     </>
   );

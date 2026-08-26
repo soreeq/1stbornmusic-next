@@ -5,6 +5,7 @@ import PhotoSlider from './PhotoSlider';
 import BeatCard from './BeatCard';
 import VideoGrid from './VideoGrid';
 import GlitchTitle from './GlitchTitle';
+import VaultTeaser from './vault/VaultTeaser';
 import { useCart } from '../contexts/CartContext';
 import { LICENSES } from './LicenseModal';
 
@@ -63,6 +64,8 @@ export default function Projects({ beats, collections, videos, channelVideos, on
           </div>
         </div>
       )}
+
+      <VaultTeaser />
 
       <VideoGrid videos={videos} />
 
