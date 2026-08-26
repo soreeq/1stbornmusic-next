@@ -1380,19 +1380,22 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .vault-hero {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 7;
-  max-height: 460px;
+  max-width: 780px;
+  aspect-ratio: 16 / 9;
+  margin: 56px auto 0;
   overflow: hidden;
+  border: 1px solid #262630;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
   background: #040405;
 }
 .vault-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(4,4,5,0) 45%, rgba(4,4,5,0.85) 82%, #040405 100%);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.55);
   pointer-events: none;
 }
-.vault-inside-head { padding: 72px 64px 40px; }
+.vault-inside-head { padding: 48px 64px 40px; }
 .vault-grid { margin: 0 64px 96px; border: 1px solid #1e1e24; }
 .vault-grid .beat-card { background: #08080a; }
 .vault-grid .beat-card:hover { background: #0c0c0f; }
@@ -1420,4 +1423,5 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   .vault-title { font-size: 44px; }
   .vault-inside-head { padding: 48px 24px 28px; }
   .vault-grid { margin: 0 24px 64px; }
+  .vault-hero { margin: 40px 24px 0; max-width: none; }
 }
