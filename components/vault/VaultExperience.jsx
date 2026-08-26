@@ -18,8 +18,8 @@ function VaultHeader() {
       <header className="nav-logo-section">
         <a href="/" style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} aria-label="1stBornMusic — back to store">
           <Image
-            src="/logo.png"
-            alt="1stBornMusic"
+            src="/vault-logo.jpg"
+            alt="1stBornMusic — The Vault"
             fill
             style={{ objectFit: 'contain', objectPosition: 'center' }}
             priority
