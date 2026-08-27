@@ -38,9 +38,10 @@ function VaultHeader() {
   );
 }
 
-function VaultInner({ beats }) {
+function VaultInner({ beats, revealed }) {
   const [modal, setModal] = useState(null);
   const { toast } = useCart();
+  const r = revealed ? ' visible' : '';
 
   return (
     <>
@@ -48,25 +49,29 @@ function VaultInner({ beats }) {
 
       <main className="vault-main">
         <div className="page-wrap">
-          <div className="vault-hero">
+          <div className={`vault-hero scroll-reveal${r}`}>
             <Image src="/vault-interior.jpg" alt="Inside the Vault — reserved stock" fill style={{ objectFit: 'cover' }} priority />
           </div>
           <div className="vault-inside-head">
-            <div className="vault-eyebrow">
+            <div className={`vault-eyebrow scroll-reveal${r}`} style={{ transitionDelay: '110ms' }}>
               <span className="vault-eyebrow-dot" />
               ACCESS GRANTED — RESERVED STOCK
             </div>
-            <h1 className="vault-title">Inside the Vault</h1>
-            <p className="vault-sub">
+            <h1 className={`vault-title scroll-reveal${r}`} style={{ transitionDelay: '180ms' }}>Inside the Vault</h1>
+            <p className={`vault-sub scroll-reveal${r}`} style={{ transitionDelay: '250ms' }}>
               {beats.length > 0
                 ? `${beats.length} beat${beats.length > 1 ? 's' : ''} under lock. These never play in the open catalog — what you hear in here stays in here.`
                 : 'The vault is being restocked. Check back soon — or DM @1st_born313.'}
             </p>
           </div>
 
-          {beats.length > 0 && (
+          {revealed && beats.length > 0 && (
             <div className="beats-grid vault-grid">
-              {beats.map((b, i) => <BeatCard key={b._id} beat={b} index={i} onBuy={setModal} />)}
+              {beats.map((b, i) => (
+                <div key={b._id} className="beat-anim-wrap" style={{ '--i': Math.min(i, 16) }}>
+                  <BeatCard beat={b} index={i} onBuy={setModal} />
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -101,6 +106,8 @@ function VaultGate() {
 export default function VaultExperience({ authorized, beats, keyToPersist }) {
   const [intro, setIntro] = useState(authorized); // door-opening overlay
   const [doorState, setDoorState] = useState('closed');
+  const [overlayFading, setOverlayFading] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     if (!authorized) return;
@@ -116,12 +123,15 @@ export default function VaultExperience({ authorized, beats, keyToPersist }) {
     // play the door-opening intro once per session
     if (sessionStorage.getItem('vault_intro_seen')) {
       setIntro(false);
-      return;
+      const t = setTimeout(() => setRevealed(true), 120);
+      return () => clearTimeout(t);
     }
     sessionStorage.setItem('vault_intro_seen', '1');
-    const t1 = setTimeout(() => setDoorState('opening'), 450);
-    const t2 = setTimeout(() => setIntro(false), 3000);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const t1 = setTimeout(() => setDoorState('opening'), 450);   // wheel spins, bolts retract, door swings — ends ~3050ms
+    const t2 = setTimeout(() => setRevealed(true), 3050);        // content starts fading in right as the door finishes swinging
+    const t3 = setTimeout(() => setOverlayFading(true), 3050);   // overlay begins its own fade at the same moment
+    const t4 = setTimeout(() => setIntro(false), 3650);          // unmount only once the fade has actually finished
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
   }, [authorized, keyToPersist]);
 
   if (!authorized) return <VaultGate />;
@@ -130,12 +140,12 @@ export default function VaultExperience({ authorized, beats, keyToPersist }) {
     <div className="vault-zone">
       <PlayerProvider beats={beats}>
         <CartProvider>
-          <VaultInner beats={beats} />
+          <VaultInner beats={beats} revealed={revealed} />
         </CartProvider>
       </PlayerProvider>
 
       {intro && (
-        <div className={`vault-intro${doorState === 'opening' ? ' opening' : ''}`}>
+        <div className={`vault-intro${overlayFading ? ' fading-out' : ''}`}>
           <VaultDoor state={doorState} />
         </div>
       )}

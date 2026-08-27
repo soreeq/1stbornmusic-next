@@ -1356,9 +1356,9 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   background:
     radial-gradient(ellipse 70% 55% at 50% 45%, rgba(190,190,210,0.08), transparent 65%),
     #030304;
-  transition: opacity 0.6s ease 2.5s;
+  transition: opacity 0.55s ease;
 }
-.vault-intro.opening { opacity: 0; pointer-events: none; }
+.vault-intro.fading-out { opacity: 0; pointer-events: none; }
 .vault-intro .vault-door-wrap { width: min(64vw, 440px); max-width: 440px; }
 
 /* ── Inside the vault ── */
