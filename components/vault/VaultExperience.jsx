@@ -120,13 +120,7 @@ export default function VaultExperience({ authorized, beats, keyToPersist }) {
       }).catch(() => {});
       window.history.replaceState(null, '', '/vault');
     }
-    // play the door-opening intro once per session
-    if (sessionStorage.getItem('vault_intro_seen')) {
-      setIntro(false);
-      const t = setTimeout(() => setRevealed(true), 120);
-      return () => clearTimeout(t);
-    }
-    sessionStorage.setItem('vault_intro_seen', '1');
+    // play the door-opening intro every time you enter the vault
     const t1 = setTimeout(() => setDoorState('opening'), 450);   // wheel spins, bolts retract, door swings — ends ~3050ms
     const t2 = setTimeout(() => setRevealed(true), 3050);        // content starts fading in right as the door finishes swinging
     const t3 = setTimeout(() => setOverlayFading(true), 3050);   // overlay begins its own fade at the same moment
