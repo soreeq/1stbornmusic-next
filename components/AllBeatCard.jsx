@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { usePlayer } from '../contexts/PlayerContext';
 
 export default function AllBeatCard({ beat, index, onBuy }) {
@@ -10,6 +11,7 @@ export default function AllBeatCard({ beat, index, onBuy }) {
   return (
     <div className={`ab-card${playing ? ' playing' : ''}`}>
       <div className="ab-card-cover">
+        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill style={{ objectFit: 'cover' }} />}
         <span className="ab-card-num">{String(index + 1).padStart(2, '0')} / ∞</span>
         <span className="ab-card-name">{beat.title}</span>
         {!sold && (

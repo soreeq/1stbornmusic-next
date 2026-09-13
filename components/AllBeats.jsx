@@ -182,6 +182,7 @@ export default function AllBeats({ beats, collections = [], onBuy }) {
         <div className="ab-beats-section">
           <div className="ab-beats-head">
             <span />
+            <span />
             <span>Title</span>
             <span>BPM</span>
             <span>Key</span>

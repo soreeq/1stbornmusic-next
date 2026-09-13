@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { usePlayer } from '../contexts/PlayerContext';
 import { IconPlay, IconPause, IconCart } from './Icons';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -31,6 +32,9 @@ export default function BeatCard({ beat, index, onBuy }) {
       style={{ position: 'relative', transitionDelay: `${delay}ms` }}
     >
       {sold && <div style={soldStampStyle}>SOLD</div>}
+      <div className="beat-card-thumb">
+        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill style={{ objectFit: 'cover' }} />}
+      </div>
       <div className="beat-num">#{String(index + 1).padStart(2, '0')} · {fmtPlays(beat.plays)} plays</div>
       <div className="beat-title">{beat.title}</div>
       <div className="beat-meta">

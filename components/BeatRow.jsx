@@ -1,5 +1,6 @@
 'use client';
 import { useMemo } from 'react';
+import Image from 'next/image';
 import { usePlayer } from '../contexts/PlayerContext';
 
 function wavBars(seed, count = 48) {
@@ -34,6 +35,10 @@ export default function BeatRow({ beat, index, onBuy }) {
       >
         {playing ? '❚❚' : '▶'}
       </button>
+
+      <div className="ab-row-thumb">
+        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill style={{ objectFit: 'cover' }} />}
+      </div>
 
       <div className="ab-row-title">
         <span className="ab-row-name">

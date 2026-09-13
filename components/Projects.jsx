@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import BioSection from './BioSection';
 import ChannelVideoSlider from './ChannelVideoSlider';
 import PhotoSlider from './PhotoSlider';
@@ -35,6 +36,11 @@ export default function Projects({ beats, collections, videos, channelVideos, on
       {hasCollections ? (
         collections.map(col => (
           <div key={col._id} className="section" style={{ paddingTop: 40, borderTop: '1px solid #111' }}>
+            {col.coverImage && (
+              <div className="collection-cover">
+                <Image src={col.coverImage} alt={col.title} fill style={{ objectFit: 'cover' }} />
+              </div>
+            )}
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 6 }}>
               <GlitchTitle>{col.title}</GlitchTitle>
               {col.beats?.length > 0 && (
