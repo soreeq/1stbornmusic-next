@@ -28,7 +28,7 @@ export default function VaultCodeForm({ onUnlocked }) {
     <form className={`vault-code-form${status === 'denied' ? ' denied' : ''}`} onSubmit={submit}>
       <input
         className="vault-code-input"
-        placeholder="ENTER ACCESS CODE"
+        placeholder="ENTER PRESSURE CODE"
         value={code}
         maxLength={24}
         autoComplete="off"
@@ -37,9 +37,9 @@ export default function VaultCodeForm({ onUnlocked }) {
         onAnimationEnd={e => e.currentTarget.parentElement.classList.remove('denied')}
       />
       <button className="vault-code-btn" type="submit" disabled={status === 'checking'}>
-        {status === 'checking' ? 'CHECKING…' : 'UNLOCK'}
+        {status === 'checking' ? 'RELEASING…' : 'RELEASE VALVE'}
       </button>
-      {status === 'denied' && <div className="vault-code-error">WRONG CODE — THE DOOR STAYS SHUT</div>}
+      {status === 'denied' && <div className="vault-code-error">WRONG CODE — THE VALVE STAYS SEALED</div>}
     </form>
   );
 }

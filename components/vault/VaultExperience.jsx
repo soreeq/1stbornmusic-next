@@ -55,7 +55,7 @@ function VaultInner({ beats, revealed }) {
           <div className="vault-inside-head">
             <div className={`vault-eyebrow scroll-reveal${r}`} style={{ transitionDelay: '110ms' }}>
               <span className="vault-eyebrow-dot" />
-              ACCESS GRANTED — RESERVED STOCK
+              VALVE RELEASED — RESERVED STOCK
             </div>
             <h1 className={`vault-title scroll-reveal${r}`} style={{ transitionDelay: '180ms' }}>Inside the Vault</h1>
             <p className={`vault-sub scroll-reveal${r}`} style={{ transitionDelay: '250ms' }}>

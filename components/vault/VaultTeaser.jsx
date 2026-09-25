@@ -26,17 +26,17 @@ export default function VaultTeaser() {
       <div className="vault-teaser-copy">
         <div className="vault-eyebrow">
           <span className="vault-eyebrow-dot" />
-          RESTRICTED ACCESS — FILE NO. 313
+          PRESSURE-SEALED — FILE NO. 313
         </div>
         <h2 className="vault-title">The Vault</h2>
         <p className="vault-sub">
           A private reserve of top-shelf instrumentals — sealed off from the public catalog.
-          Heard only by those who hold the code. Once a beat goes in the vault, it never plays in the open.
+          Heard only by those who hold the pressure code. Once a beat goes in the vault, it never plays in the open.
         </p>
 
         {authorized ? (
           <button className="vault-enter-btn" onClick={() => router.push('/vault')}>
-            DOOR UNLOCKED — ENTER THE VAULT →
+            VALVE RELEASED — ENTER THE VAULT →
           </button>
         ) : (
           <VaultCodeForm onUnlocked={() => router.push('/vault')} />
@@ -56,7 +56,7 @@ export default function VaultTeaser() {
             <rect x="14" y="18" width="3" height="2" /><rect x="19" y="17" width="2" height="4" />
           </svg>
           <span>
-            Got a card? <strong>Scan the QR</strong> and the door opens itself.<br />
+            Got a card? <strong>Scan the QR</strong> and the valve opens itself.<br />
             Codes are handed out by 1stBorn himself — <a href="https://www.instagram.com/1st_born313" target="_blank" rel="noreferrer">DM @1st_born313</a>.
           </span>
         </div>
