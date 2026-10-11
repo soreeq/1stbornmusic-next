@@ -16,6 +16,12 @@ export default function LicenseModal({ beat, onClose }) {
   const { addToCart } = useCart();
   if (!beat) return null;
 
+  const priceFor = lic => {
+    const custom = Number(beat.prices?.[lic.key]);
+    return Number.isFinite(custom) && custom > 0 ? custom : lic.price;
+  };
+  const add = lic => { addToCart(beat, { ...lic, price: priceFor(lic) }); onClose(); };
+
   return (
     <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal">
@@ -28,14 +34,14 @@ export default function LicenseModal({ beat, onClose }) {
         </div>
         <div className="modal-body">
           {LICENSES.map(lic => (
-            <div key={lic.key} className="lic-row" onClick={() => { addToCart(beat, lic); onClose(); }}>
+            <div key={lic.key} className="lic-row" onClick={() => add(lic)}>
               <div style={{ fontSize: 22, width: 32, textAlign: 'center' }}>{lic.icon}</div>
               <div className="lic-row-name">
                 <div className="lic-row-title">{lic.name}</div>
                 <div className="lic-row-desc">{lic.desc}</div>
               </div>
-              <div className="lic-row-price">${lic.price}</div>
-              <button className="btn btn-sm btn-accent" onClick={e => { e.stopPropagation(); addToCart(beat, lic); onClose(); }}>
+              <div className="lic-row-price">${priceFor(lic)}</div>
+              <button className="btn btn-sm btn-accent" onClick={e => { e.stopPropagation(); add(lic); }}>
                 Add to Cart
               </button>
             </div>
