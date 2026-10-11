@@ -19,6 +19,7 @@ export default function CartDrawer() {
   const [error, setError] = useState('');
   const [order, setOrder] = useState(null);
   const [qr, setQr] = useState('');
+  const [copied, setCopied] = useState(false);
   const total = items.reduce((s, i) => s + i.price, 0);
 
   useEffect(() => {
@@ -154,24 +155,32 @@ export default function CartDrawer() {
         {step === 'pay' && order && (
           <>
             <div className="drawer-body" style={{ alignItems: 'center', textAlign: 'center', gap: 14 }}>
-              <div style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)' }}>Order received</div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, letterSpacing: '0.12em', color: '#fff' }}>{order.orderCode}</div>
-              <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.7 }}>
-                Your order is <strong style={{ color: 'var(--text)' }}>not paid yet</strong>. Pay <strong style={{ color: 'var(--text)' }}>${order.total}</strong> to complete it.
+              <div style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)' }}>Order received — not paid yet</div>
+              <div style={{ width: '100%', border: '1px solid var(--border)', padding: '14px 12px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div>
+                  <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--muted)' }}>1 · Send exactly</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 26, color: '#fff' }}>${order.total} <span style={{ fontSize: 12, color: 'var(--muted)' }}>{order.currency}</span></div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--muted)' }}>2 · Put this in the payment note</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 20, letterSpacing: '0.12em', color: '#fff' }}>{order.orderCode}</div>
+                  <button className="btn btn-ghost btn-sm" style={{ marginTop: 6 }} onClick={() => navigator.clipboard?.writeText(order.orderCode).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1800); }).catch(() => {})}>
+                    {copied ? 'Copied ✓' : 'Copy code'}
+                  </button>
+                </div>
               </div>
               <a className="btn btn-accent" style={{ width: '100%', justifyContent: 'center' }} href={order.payUrl} target="_blank" rel="noreferrer">
-                Pay ${order.total} with Revolut →
+                Open Revolut →
               </a>
               {qr && (
                 <>
                   <div style={{ fontSize: 11, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>or scan with your phone</div>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={qr} alt="Revolut payment QR code" width={180} height={180} style={{ border: '1px solid var(--border)' }} />
+                  <img src={qr} alt="Revolut payment QR code" width={160} height={160} style={{ border: '1px solid var(--border)' }} />
                 </>
               )}
               <div style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.7 }}>
-                Put <strong style={{ color: 'var(--text)' }}>{order.orderCode}</strong> in the payment note if it isn&apos;t filled in for you.
-                Payments are confirmed by hand — your files are emailed to <strong style={{ color: 'var(--text)' }}>{email}</strong>, usually within 24 hours.
+                Revolut asks you to type the amount yourself. Payments are confirmed by hand — your files are emailed to <strong style={{ color: 'var(--text)' }}>{email}</strong>, usually within 24 hours.
               </div>
             </div>
             <div className="drawer-footer">

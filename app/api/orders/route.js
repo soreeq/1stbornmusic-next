@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { client } from '../../../lib/sanity';
 import { LICENSES } from '../../../lib/constants';
 import { VAULT_COOKIE, isValidCookie } from '../../../lib/vault';
-import { CURRENCY, buildPayUrl } from '../../../lib/payment';
+import { CURRENCY, PAY_URL } from '../../../lib/payment';
 
 const LIC = Object.fromEntries(LICENSES.map(l => [l.key, l]));
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -108,7 +108,7 @@ export async function POST(request) {
 
   const total = lines.reduce((s, l) => s + l.price, 0);
   const orderCode = newOrderCode();
-  const payUrl = buildPayUrl(total, orderCode);
+  const payUrl = PAY_URL;
 
   if (rateLimited(ip)) return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
 
@@ -127,7 +127,7 @@ export async function POST(request) {
     '',
     `Total: ${usd(total)} ${CURRENCY}`,
     '',
-    `Expect a Revolut payment of exactly ${usd(total)} with reference ${orderCode} (customer may have left the reference empty — match by amount and time).`,
+    `Expect a Revolut payment of ${usd(total)} (the customer types the amount and the note by hand — they were asked to put ${orderCode} in the note; if it is missing, match by amount, time and name).`,
     `Once the money lands: send the files to ${email}.`,
   ].join('\n');
   const html = `
@@ -135,8 +135,8 @@ export async function POST(request) {
     <p><b>Customer:</b> ${esc(name)} &lt;${esc(email)}&gt;</p>
     <ul>${lines.map(l => `<li>${esc(l.title)} — ${esc(l.licName)} — <b>${esc(usd(l.price))}</b></li>`).join('')}</ul>
     <p><b>Total: ${esc(usd(total))} ${CURRENCY}</b></p>
-    <p>Expect a Revolut payment of exactly <b>${esc(usd(total))}</b> with reference <b>${esc(orderCode)}</b>
-    (the customer may have left the reference empty — match by amount and time).</p>
+    <p>Expect a Revolut payment of <b>${esc(usd(total))}</b>. The customer types the amount and the note by hand — they were asked to put
+    <b>${esc(orderCode)}</b> in the note; if it is missing, match by amount, time and name.</p>
     <p>Once the money lands: send the files to ${esc(email)}.</p>`;
 
   const sent = await sendMail({
@@ -152,8 +152,8 @@ export async function POST(request) {
     sendMail({
       to: email,
       subject: `Your order ${orderCode} — complete the payment`,
-      text: `Hi ${name},\n\nYour order ${orderCode} (${usd(total)} ${CURRENCY}) is reserved.\nComplete the payment here: ${payUrl}\n\nOnce the payment is confirmed your files are sent to this address, usually within 24 hours.\n\n${listText}`,
-      html: `<p>Hi ${esc(name)},</p><p>Your order <b>${esc(orderCode)}</b> (${esc(usd(total))} ${CURRENCY}) is reserved.</p><p><a href="${esc(payUrl)}">Complete the payment on Revolut</a></p><p>Once the payment is confirmed your files are sent to this address, usually within 24 hours.</p>`,
+      text: `Hi ${name},\n\nYour order ${orderCode} (${usd(total)} ${CURRENCY}) is reserved.\nPay on Revolut: ${payUrl}\nEnter the amount ${usd(total)} and put ${orderCode} in the note.\n\nOnce the payment is confirmed your files are sent to this address, usually within 24 hours.\n\n${listText}`,
+      html: `<p>Hi ${esc(name)},</p><p>Your order <b>${esc(orderCode)}</b> (${esc(usd(total))} ${CURRENCY}) is reserved.</p><p><a href="${esc(payUrl)}">Pay on Revolut</a> — enter the amount <b>${esc(usd(total))}</b> and put <b>${esc(orderCode)}</b> in the note.</p><p>Once the payment is confirmed your files are sent to this address, usually within 24 hours.</p>`,
     }).catch(() => {});
   }
 
