@@ -10,8 +10,8 @@ export default function AllBeatCard({ beat, index, onBuy }) {
 
   return (
     <div className={`ab-card${playing ? ' playing' : ''}`}>
-      <div className="ab-card-cover">
-        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill style={{ objectFit: 'cover' }} />}
+      <div className={`ab-card-cover${beat.thumbnail ? ' has-img' : ''}`}>
+        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill sizes="280px" style={{ objectFit: 'contain' }} />}
         <span className="ab-card-num">{String(index + 1).padStart(2, '0')} / ∞</span>
         <span className="ab-card-name">{beat.title}</span>
         {!sold && (

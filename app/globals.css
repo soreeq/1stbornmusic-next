@@ -1468,9 +1468,13 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   position: relative;
   width: 100%;
   max-width: 520px;
-  aspect-ratio: 16 / 9;
+  max-height: 480px;
   margin-bottom: 24px;
   overflow: hidden;
   border: 1px solid #1a1614;
+  background: #050303;
   box-shadow: 0 16px 40px rgba(0,0,0,0.5);
 }
+.beat-card-thumb.has-img,
+.ab-row-thumb.has-img,
+.ab-card-cover.has-img { background: #050303; }

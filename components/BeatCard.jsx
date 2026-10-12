@@ -32,8 +32,8 @@ export default function BeatCard({ beat, index, onBuy }) {
       style={{ position: 'relative', transitionDelay: `${delay}ms` }}
     >
       {sold && <div style={soldStampStyle}>SOLD</div>}
-      <div className="beat-card-thumb">
-        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill style={{ objectFit: 'cover' }} />}
+      <div className={`beat-card-thumb${beat.thumbnail ? ' has-img' : ''}`}>
+        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill sizes="280px" style={{ objectFit: 'contain' }} />}
       </div>
       <div className="beat-num">#{String(index + 1).padStart(2, '0')} · {fmtPlays(beat.plays)} plays</div>
       <div className="beat-title">{beat.title}</div>

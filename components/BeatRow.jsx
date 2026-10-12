@@ -36,8 +36,8 @@ export default function BeatRow({ beat, index, onBuy }) {
         {playing ? '❚❚' : '▶'}
       </button>
 
-      <div className="ab-row-thumb">
-        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill style={{ objectFit: 'cover' }} />}
+      <div className={`ab-row-thumb${beat.thumbnail ? ' has-img' : ''}`}>
+        {beat.thumbnail && <Image src={beat.thumbnail} alt={beat.title} fill sizes="88px" style={{ objectFit: 'contain' }} />}
       </div>
 
       <div className="ab-row-title">
