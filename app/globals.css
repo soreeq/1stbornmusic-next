@@ -1478,3 +1478,6 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .beat-card-thumb.has-img,
 .ab-row-thumb.has-img,
 .ab-card-cover.has-img { background: #050303; }
+
+.bio-ed-p a { color: var(--accent); border-bottom: 1px solid rgba(217,43,58,.4); }
+.bio-ed-p a:hover { border-bottom-color: var(--accent); }

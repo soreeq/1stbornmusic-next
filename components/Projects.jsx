@@ -17,7 +17,7 @@ const FAQ = [
   ['Custom beats?', 'Yes — DM @1st_born313 on Instagram with your references and budget.'],
 ];
 
-export default function Projects({ beats, collections, videos, channelVideos, onBuy }) {
+export default function Projects({ beats, collections, videos, channelVideos, bio, onBuy }) {
   const featuredBeats = beats.filter(b => b.isFeatured);
   const hasCollections = collections?.length > 0;
   const { addToCart } = useCart();
@@ -26,7 +26,7 @@ export default function Projects({ beats, collections, videos, channelVideos, on
     <div>
       <VaultTeaser />
 
-      <BioSection />
+      <BioSection bio={bio} />
       <ChannelVideoSlider videos={channelVideos} />
 
       <div className="section" style={{ borderTop: '1px solid #111', paddingBottom: 0, display: 'flex', justifyContent: 'center' }}>

@@ -13,7 +13,7 @@ import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
 
-function StoreInner({ beats, collections, videos, photos, channelVideos }) {
+function StoreInner({ beats, collections, videos, photos, channelVideos, bio }) {
   const [tab, setTab] = useState('projects');
   const [modal, setModal] = useState(null);
   const { toast } = useCart();
@@ -25,11 +25,11 @@ function StoreInner({ beats, collections, videos, photos, channelVideos }) {
       <main className="main">
         <div className="page-wrap">
           {tab === 'projects' && (
-            <Projects beats={beats} collections={collections} videos={videos} channelVideos={channelVideos} onBuy={setModal} />
+            <Projects beats={beats} collections={collections} videos={videos} channelVideos={channelVideos} bio={bio} onBuy={setModal} />
           )}
           {tab === 'beats'   && <AllBeats beats={beats} collections={collections} onBuy={setModal} />}
           {tab === 'gallery' && <Gallery photos={photos} />}
-          {tab === 'bio'     && <BioSection />}
+          {tab === 'bio'     && <BioSection bio={bio} />}
           {tab === 'contact' && <Contact />}
           {tab === 'legacy'  && <HipHopLegacy beats={beats} onTabChange={setTab} />}
         </div>
@@ -44,11 +44,11 @@ function StoreInner({ beats, collections, videos, photos, channelVideos }) {
   );
 }
 
-export default function BeatStore({ beats, collections, videos, photos, channelVideos }) {
+export default function BeatStore({ beats, collections, videos, photos, channelVideos, bio }) {
   return (
     <PlayerProvider beats={beats}>
       <CartProvider>
-        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} channelVideos={channelVideos} />
+        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} channelVideos={channelVideos} bio={bio} />
       </CartProvider>
     </PlayerProvider>
   );

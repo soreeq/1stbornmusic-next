@@ -1,21 +1,51 @@
 'use client';
+import { useState } from 'react';
+import { PortableText } from '@portabletext/react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { IconIG, IconMail } from './Icons';
+import { BIO_DEFAULTS } from '../lib/bioDefaults';
 
-const CREDITS = [
-  { name: 'Eminem',     role: 'Music Video',        work: '"Toy Soldiers"' },
-  { name: 'D12',        role: 'Music Video',         work: '"Fight Music"' },
-  { name: 'Big Proof',  role: 'Music Video · Label', work: '"Gurls Wit da BOOM"' },
-  { name: 'Bizarre',    role: 'Music Video',         work: '"Hip Hop"' },
-  { name: 'Obie Trice', role: 'Music Video',         work: '"Cry Now"' },
-];
+const ledeComponents = {
+  block: { normal: ({ children }) => <p className="bio-lede">{children}</p> },
+};
+const paragraphComponents = {
+  block: { normal: ({ children }) => <p className="bio-ed-p">{children}</p> },
+  marks: {
+    link: ({ value, children }) => (
+      <a href={value?.href} target={value?.href?.startsWith('http') ? '_blank' : undefined} rel="noreferrer">{children}</a>
+    ),
+  },
+};
 
-export default function BioSection() {
+function linkIcon(url = '') {
+  if (url.startsWith('mailto:')) return <IconMail />;
+  if (url.includes('instagram.com')) return <IconIG />;
+  return null;
+}
+
+// With a `bio` document in Sanity every field is taken from it as-is (an emptied
+// field hides its section). Without one, the built-in defaults are shown.
+export default function BioSection({ bio }) {
+  const b = bio ?? BIO_DEFAULTS;
   const [headerRef, headerVis]     = useScrollReveal(0.15);
   const [portraitRef, portraitVis] = useScrollReveal(0.15);
   const [textRef, textVis]         = useScrollReveal(0.15);
   const [quoteRef, quoteVis]       = useScrollReveal(0.2);
   const [statsRef, statsVis]       = useScrollReveal(0.2);
   const [creditsRef, creditsVis]   = useScrollReveal(0.15);
+  const [expanded, setExpanded]    = useState(false);
+
+  const body = b.body ?? [];
+  const [lede, ...rest] = body;
+  const longStory = b.longStory ?? [];
+  const stats = b.stats ?? [];
+  const credits = b.credits ?? [];
+  const tags = b.tags ?? [];
+  const links = b.links ?? [];
+
+  const dims = b.portraitDims;
+  const portraitRatio = dims?.width && dims?.height ? Math.min(1.25, Math.max(0.6, dims.width / dims.height)) : null;
+  const portraitSrc = b.portrait ? `${b.portrait}?w=1000&auto=format` : '/cleveland.jpg';
 
   return (
     <section className="bio-section">
@@ -23,66 +53,97 @@ export default function BioSection() {
         <div ref={headerRef} className={`bio-header-block scroll-reveal ${headerVis ? 'visible' : ''}`}>
           <div className="bio-eyebrow">
             <span className="bio-eyebrow-dot" />
-            BIO / FILE NO. 001
+            {b.fileNo}
             <span className="bio-eyebrow-rule" />
-            DETROIT, MI
+            {b.city}
           </div>
 
-          <h2 className="bio-section-title">Cleveland L. Hurd</h2>
-          <p className="bio-section-sub">Known to the world as 1stBorn</p>
+          <h2 className="bio-section-title">{b.name}</h2>
+          {b.tagline && <p className="bio-section-sub">{b.tagline}</p>}
         </div>
 
         <div className="bio-ed-grid">
-          <div ref={portraitRef} className={`bio-ed-portrait scroll-reveal ${portraitVis ? 'visible' : ''}`}>
-            <img src="/cleveland.jpg" alt="Cleveland L. Hurd" />
-            <div className="bio-ed-frame-tag">PRESS / B&amp;W</div>
-            <div className="bio-ed-scale">6'5&quot;<small>HEIGHT ON RECORD</small></div>
+          <div
+            ref={portraitRef}
+            className={`bio-ed-portrait scroll-reveal ${portraitVis ? 'visible' : ''}`}
+            style={portraitRatio ? { aspectRatio: portraitRatio } : undefined}
+          >
+            <img src={portraitSrc} alt={b.name} />
+            {b.portraitTag && <div className="bio-ed-frame-tag">{b.portraitTag}</div>}
+            {b.badgeValue && <div className="bio-ed-scale">{b.badgeValue}{b.badgeLabel && <small>{b.badgeLabel}</small>}</div>}
           </div>
 
           <div ref={textRef} className={`scroll-reveal-r ${textVis ? 'visible' : ''}`}>
-            <h3 className="bio-ed-heading">
-              A low-key giant from Detroit with a presence that carries the room — <em>and the label.</em>
-            </h3>
-            <p className="bio-lede">
-              Cleveland L. Hurd has always been known for his low-key personality, even though he towers over most people at 6'5ft tall. His presence is as commanding in person as it is on stage.
-            </p>
-            <p className="bio-ed-p">
-              The late, great <strong>Big Proof</strong>, of multi-platinum status and <strong>D12</strong> fame, placed him at the helm of his label <strong>Iron Fist Records</strong> because of his unique and impressive combination of leadership, and keen sense of business skills.
-            </p>
-            <p className="bio-ed-p">
-              As an artist, he is known to the world as <strong>1stBorn</strong> — appearing in videos including <em>Eminem's "Toy Soldiers,"</em> <em>D12's "Fight Music,"</em> <em>Big Proof's "Gurls Wit da BOOM,"</em> <em>Bizarre's "Hip Hop,"</em> and <em>Obie Trice's "Cry Now."</em>
-            </p>
-            <p className="bio-ed-p">
-              Featured in <strong>Qd3's documentary <em>BEEF</em></strong>, regularly aired on <strong>FUSE TV</strong>.
-            </p>
+            {b.headline && (
+              <h3 className="bio-ed-heading">
+                {b.headline}{b.headlineAccent && <> <em>{b.headlineAccent}</em></>}
+              </h3>
+            )}
+            {lede && <PortableText value={[lede]} components={ledeComponents} />}
+            {rest.length > 0 && <PortableText value={rest} components={paragraphComponents} />}
+
+            {longStory.length > 0 && (
+              <>
+                {expanded && <PortableText value={longStory} components={paragraphComponents} />}
+                <button className="btn btn-ghost btn-sm" style={{ marginTop: 16 }} onClick={() => setExpanded(e => !e)}>
+                  {expanded ? 'Show Less ▲' : 'Show More ▼'}
+                </button>
+              </>
+            )}
+
+            {tags.length > 0 && (
+              <div className="bio-tags">
+                {tags.map(t => <span key={t} className="bio-tag">{t}</span>)}
+              </div>
+            )}
+            {links.length > 0 && (
+              <div className="bio-social">
+                {links.map(l => (
+                  <a key={l._key || l.url} href={l.url} target={l.url?.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="btn btn-outline btn-sm">
+                    {linkIcon(l.url)} {l.label}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        <div ref={quoteRef} className={`bio-pull-quote scroll-reveal ${quoteVis ? 'visible' : ''}`}>
-          <q>Low-key personality. Commanding presence. Detroit-born, Iron Fist-raised.</q>
-          <div className="bio-pull-src">— Press, on 1stBorn</div>
-        </div>
+        {b.quote && (
+          <div ref={quoteRef} className={`bio-pull-quote scroll-reveal ${quoteVis ? 'visible' : ''}`}>
+            <q>{b.quote}</q>
+            {b.quoteSource && <div className="bio-pull-src">{b.quoteSource}</div>}
+          </div>
+        )}
 
-        <div ref={statsRef} className={`bio-stats ${statsVis ? 'stats-visible' : ''}`}>
-          <div className="bio-stat"><span className="bio-stat-num">6'5<small>"</small></span><span className="bio-stat-lbl">Height</span><span className="bio-stat-sub">Low-key giant</span></div>
-          <div className="bio-stat"><span className="bio-stat-num">5<small>+</small></span><span className="bio-stat-lbl">Music Videos</span><span className="bio-stat-sub">Eminem · D12 · Obie Trice</span></div>
-          <div className="bio-stat"><span className="bio-stat-num">1</span><span className="bio-stat-lbl">Label at the helm</span><span className="bio-stat-sub">Iron Fist Records</span></div>
-          <div className="bio-stat"><span className="bio-stat-num">FUSE</span><span className="bio-stat-lbl">Featured doc</span><span className="bio-stat-sub">Qd3's <em>BEEF</em></span></div>
-        </div>
+        {stats.length > 0 && (
+          <div ref={statsRef} className={`bio-stats ${statsVis ? 'stats-visible' : ''}`}>
+            {stats.map((s, i) => (
+              <div key={s._key || i} className="bio-stat">
+                <span className="bio-stat-num">{s.value}{s.suffix && <small>{s.suffix}</small>}</span>
+                <span className="bio-stat-lbl">{s.label}</span>
+                {s.sub && <span className="bio-stat-sub">{s.sub}</span>}
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div className="bio-credits-head">
-          <span className="bio-credits-lbl">◢ Worked With</span>
-          <span className="bio-credits-rule" />
-        </div>
-        <div ref={creditsRef} className={`bio-credits-grid ${creditsVis ? 'credits-visible' : ''}`}>
-          {CREDITS.map((c, i) => (
-            <div key={c.name} className="bio-credit" style={{ '--i': i }}>
-              <span className="bio-credit-name">{c.name}</span>
-              <span className="bio-credit-role">{c.role}</span>
-              <span className="bio-credit-work">{c.work}</span>
+        {credits.length > 0 && (
+          <>
+            <div className="bio-credits-head">
+              <span className="bio-credits-lbl">◢ Worked With</span>
+              <span className="bio-credits-rule" />
             </div>
-          ))}
-        </div>
+            <div ref={creditsRef} className={`bio-credits-grid ${creditsVis ? 'credits-visible' : ''}`}>
+              {credits.map((c, i) => (
+                <div key={c._key || c.name} className="bio-credit" style={{ '--i': i }}>
+                  <span className="bio-credit-name">{c.name}</span>
+                  <span className="bio-credit-role">{c.role}</span>
+                  <span className="bio-credit-work">{c.work}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
