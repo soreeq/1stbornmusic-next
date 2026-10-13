@@ -13,7 +13,7 @@ import Contact from './Contact';
 import LicenseModal from './LicenseModal';
 import CartDrawer from './CartDrawer';
 
-function StoreInner({ beats, collections, videos, photos, channelVideos, bio, memoriam }) {
+function StoreInner({ beats, collections, videos, photos, channelVideos, bio, memoriam, legacy }) {
   const [tab, setTab] = useState('projects');
   const [modal, setModal] = useState(null);
   const { toast } = useCart();
@@ -31,7 +31,7 @@ function StoreInner({ beats, collections, videos, photos, channelVideos, bio, me
           {tab === 'gallery' && <Gallery photos={photos} />}
           {tab === 'bio'     && <BioSection bio={bio} />}
           {tab === 'contact' && <Contact />}
-          {tab === 'legacy'  && <HipHopLegacy beats={beats} memoriam={memoriam} onTabChange={setTab} />}
+          {tab === 'legacy'  && <HipHopLegacy beats={beats} memoriam={memoriam} legacy={legacy} onTabChange={setTab} />}
         </div>
       </main>
 
@@ -44,11 +44,11 @@ function StoreInner({ beats, collections, videos, photos, channelVideos, bio, me
   );
 }
 
-export default function BeatStore({ beats, collections, videos, photos, channelVideos, bio, memoriam }) {
+export default function BeatStore({ beats, collections, videos, photos, channelVideos, bio, memoriam, legacy }) {
   return (
     <PlayerProvider beats={beats}>
       <CartProvider>
-        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} channelVideos={channelVideos} bio={bio} memoriam={memoriam} />
+        <StoreInner beats={beats} collections={collections} videos={videos} photos={photos} channelVideos={channelVideos} bio={bio} memoriam={memoriam} legacy={legacy} />
       </CartProvider>
     </PlayerProvider>
   );

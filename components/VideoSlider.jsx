@@ -2,9 +2,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePlayer } from '../contexts/PlayerContext';
 
-const YOUTUBE_IDS = ['0_8FtrLr1AE', 'Ewfj2DYzvbU', 'xqpCT9JEuMQ', 'DFSitiOrisY'];
-
-export default function VideoSlider({ beats, onTabChange }) {
+export default function VideoSlider({ videoIds, beats, onTabChange }) {
+  const YOUTUBE_IDS = videoIds;
   const [current, setCurrent] = useState(0);
   const [muted, setMuted] = useState(true);
   const timerRef = useRef(null);
@@ -36,7 +35,7 @@ export default function VideoSlider({ beats, onTabChange }) {
           const isUnmuted = !muted && i === current;
           const muteParam = isUnmuted ? '' : '&mute=1';
           return (
-            <div key={id + (isUnmuted ? 'u' : 'm')} className="vslider-frame">
+            <div key={`${i}-${id}-${isUnmuted ? 'u' : 'm'}`} className="vslider-frame">
               <iframe
                 src={`https://www.youtube.com/embed/${id}?autoplay=1${muteParam}&rel=0&modestbranding=1&controls=0&loop=1&playlist=${id}`}
                 allow="autoplay; encrypted-media"
@@ -57,6 +56,7 @@ export default function VideoSlider({ beats, onTabChange }) {
         <button className="btn btn-accent" onClick={() => onTabChange('beats')}>Browse All Beats</button>
         {beats.length > 0 && <button className="btn btn-outline" onClick={() => handlePlay(beats[0])}>Listen Now</button>}
       </div>
+      {YOUTUBE_IDS.length > 1 && <>
       <div className="vslider-dots">
         {YOUTUBE_IDS.map((_, i) => (
           <button key={i} className={`vslider-dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i)} />
@@ -66,6 +66,7 @@ export default function VideoSlider({ beats, onTabChange }) {
         <button className="vslider-arrow" onClick={() => goTo((current - 1 + YOUTUBE_IDS.length) % YOUTUBE_IDS.length)}>◀</button>
         <button className="vslider-arrow" onClick={() => goTo((current + 1) % YOUTUBE_IDS.length)}>▶</button>
       </div>
+      </>}
     </div>
   );
 }
