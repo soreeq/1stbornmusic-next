@@ -2,11 +2,11 @@
 import VideoSlider from './VideoSlider';
 import BigProofMemoriam from './BigProofMemoriam';
 
-export default function HipHopLegacy({ beats, onTabChange }) {
+export default function HipHopLegacy({ beats, memoriam, onTabChange }) {
   return (
     <div>
       <VideoSlider beats={beats} onTabChange={onTabChange} />
-      <BigProofMemoriam />
+      <BigProofMemoriam memoriam={memoriam} />
     </div>
   );
 }

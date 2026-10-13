@@ -1,14 +1,37 @@
 'use client';
 import Image from 'next/image';
+import { PortableText } from '@portabletext/react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { MEMORIAM_DEFAULTS } from '../lib/memoriamDefaults';
 
-export default function BigProofMemoriam() {
+const inlineComponents = {
+  block: { normal: ({ children }) => <>{children}</> },
+};
+const linkComponents = {
+  marks: {
+    link: ({ value, children }) => (
+      <a href={value?.href} target={value?.href?.startsWith('http') ? '_blank' : undefined} rel="noreferrer">{children}</a>
+    ),
+  },
+};
+
+// With a `memoriam` document in Sanity every field is taken from it as-is (an
+// emptied field hides its part). Without one, the built-in defaults are shown.
+export default function BigProofMemoriam({ memoriam }) {
+  const m = memoriam ?? MEMORIAM_DEFAULTS;
   const [crossRef, crossVis]   = useScrollReveal(0.2);
   const [titleRef, titleVis]   = useScrollReveal(0.15);
   const [gridRef, gridVis]     = useScrollReveal(0.1);
+  const [memRef, memVis]       = useScrollReveal(0.15);
   const [quoteRef, quoteVis]   = useScrollReveal(0.2);
   const [legacyRef, legacyVis] = useScrollReveal(0.15);
   const [footRef, footVis]     = useScrollReveal(0.3);
+
+  const dims = m.portraitDims;
+  const portraitRatio = dims?.width && dims?.height ? Math.min(1.25, Math.max(0.6, dims.width / dims.height)) : null;
+  const portraitSrc = m.portrait ? `${m.portrait}?w=1000&auto=format` : '/big-proof.webp';
+  const legacy = m.legacy ?? [];
+  const hasMemories = (m.memories ?? []).length > 0;
 
   return (
     <section className="memoriam">
@@ -21,85 +44,82 @@ export default function BigProofMemoriam() {
         </div>
 
         <div ref={titleRef} className={`scroll-reveal ${titleVis ? 'visible' : ''}`}>
-          <div className="mem-eyebrow">In Loving Memory · Forever Detroit</div>
-          <h2 className="mem-name">Big Proof</h2>
-          <p className="mem-realname">DeShaun Dupree Holton</p>
-          <div className="mem-dates">
-            <div>
-              <span className="mem-date-y">1973</span>
-              <span className="mem-date-lbl">Born · Oct 2</span>
+          {m.eyebrow && <div className="mem-eyebrow">{m.eyebrow}</div>}
+          <h2 className="mem-name">{m.name}</h2>
+          {m.realName && <p className="mem-realname">{m.realName}</p>}
+          {(m.birthYear || m.deathYear) && (
+            <div className="mem-dates">
+              {m.birthYear && (
+                <div>
+                  <span className="mem-date-y">{m.birthYear}</span>
+                  <span className="mem-date-lbl">{m.birthLabel}</span>
+                </div>
+              )}
+              {m.birthYear && m.deathYear && <span className="mem-dates-sep" />}
+              {m.deathYear && (
+                <div>
+                  <span className="mem-date-y">{m.deathYear}</span>
+                  <span className="mem-date-lbl">{m.deathLabel}</span>
+                </div>
+              )}
             </div>
-            <span className="mem-dates-sep" />
-            <div>
-              <span className="mem-date-y">2006</span>
-              <span className="mem-date-lbl">Rest · Apr 11</span>
-            </div>
-          </div>
+          )}
         </div>
 
         <div ref={gridRef} className={`mem-grid scroll-reveal ${gridVis ? 'visible' : ''}`}>
-          <div className="mem-portrait">
-            <Image src="/big-proof.webp" alt="Big Proof — DeShaun Dupree Holton" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
+          <div className="mem-portrait" style={portraitRatio ? { aspectRatio: portraitRatio } : undefined}>
+            <Image src={portraitSrc} alt={`${m.name}${m.realName ? ` — ${m.realName}` : ''}`} fill sizes="480px" style={{ objectFit: 'cover', objectPosition: 'top' }} />
             <span className="mem-corner tl" />
             <span className="mem-corner br" />
-            <span className="mem-archive">ARCHIVE · IRON FIST</span>
+            {m.portraitTag && <span className="mem-archive">{m.portraitTag}</span>}
           </div>
 
           <div className="mem-copy">
-            <h3>Founder of <em>D12</em>. Architect of <em>Iron Fist Records</em>. The reason 1stBorn is here.</h3>
-            <p>
-              <strong>DeShaun Dupree Holton</strong> — known to the world as <strong>Big Proof</strong> — was
-              the cornerstone of Detroit hip-hop. Childhood friend of Eminem, founder of <strong>D12</strong>,
-              and the one who built <strong>Iron Fist Records</strong> from the ground up.
-            </p>
-            <p>
-              His vision wasn't just music — it was the city. He saw talent before the rest of the world
-              caught up, and he made room at the table for everyone who came after.
-            </p>
-            <p>
-              He placed <strong>1stBorn</strong> at the helm of Iron Fist for one reason: he <em>saw him</em>.
-              Saw the leadership, the patience, the long game.
-            </p>
-            <div className="mem-from">
-              "You put the crown on my head before the world knew my name. Everything I build, I build in
-              your honor. Long live Proof."
-              <span className="mem-sig">— 1stBorn</span>
-            </div>
+            {(m.headline ?? []).length > 0 && (
+              <h3><PortableText value={m.headline} components={inlineComponents} /></h3>
+            )}
+            {(m.body ?? []).length > 0 && <PortableText value={m.body} components={linkComponents} />}
+            {m.tribute && (
+              <div className="mem-from">
+                {m.tribute}
+                {m.tributeSignature && <span className="mem-sig">{m.tributeSignature}</span>}
+              </div>
+            )}
           </div>
         </div>
 
-        <div ref={quoteRef} className={`mem-quote scroll-reveal ${quoteVis ? 'visible' : ''}`}>
-          <q>Detroit, the D, the city of champions — he carried it on his back.</q>
-          <div className="mem-quote-src">— In tribute</div>
-        </div>
+        {hasMemories && (
+          <div ref={memRef} className={`mem-memories scroll-reveal ${memVis ? 'visible' : ''}`}>
+            <div className="mem-memories-lbl">◢ Remembered by 1stBorn</div>
+            <PortableText value={m.memories} components={linkComponents} />
+          </div>
+        )}
 
-        <div ref={legacyRef} className={`mem-legacy scroll-reveal ${legacyVis ? 'visible' : ''}`}>
-          <div className="mem-legacy-cell">
-            <span className="mem-legacy-k">Founded</span>
-            <span className="mem-legacy-v">D12</span>
-            <span className="mem-legacy-d">The Dirty Dozen — Detroit's defining hip-hop collective.</span>
+        {m.quote && (
+          <div ref={quoteRef} className={`mem-quote scroll-reveal ${quoteVis ? 'visible' : ''}`}>
+            <q>{m.quote}</q>
+            {m.quoteSource && <div className="mem-quote-src">{m.quoteSource}</div>}
           </div>
-          <div className="mem-legacy-cell">
-            <span className="mem-legacy-k">Built</span>
-            <span className="mem-legacy-v">Iron Fist Records</span>
-            <span className="mem-legacy-d">Independent label — platform for Detroit's next wave.</span>
-          </div>
-          <div className="mem-legacy-cell">
-            <span className="mem-legacy-k">Solo</span>
-            <span className="mem-legacy-v">Searching for Jerry Garcia</span>
-            <span className="mem-legacy-d">2005 — his definitive solo statement.</span>
-          </div>
-          <div className="mem-legacy-cell">
-            <span className="mem-legacy-k">Legacy</span>
-            <span className="mem-legacy-v">The Blueprint</span>
-            <span className="mem-legacy-d">Mentor, brother, gatekeeper. Forever.</span>
-          </div>
-        </div>
+        )}
 
-        <div ref={footRef} className={`mem-foot scroll-reveal ${footVis ? 'visible' : ''}`}>
-          Rest in Power
-          <small>1973 · 2006 · Long Live Proof</small>
-        </div>
+        {legacy.length > 0 && (
+          <div ref={legacyRef} className={`mem-legacy scroll-reveal ${legacyVis ? 'visible' : ''}`}>
+            {legacy.map((c, i) => (
+              <div key={c._key || i} className="mem-legacy-cell">
+                <span className="mem-legacy-k">{c.label}</span>
+                <span className="mem-legacy-v">{c.value}</span>
+                <span className="mem-legacy-d">{c.text}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {m.footTitle && (
+          <div ref={footRef} className={`mem-foot scroll-reveal ${footVis ? 'visible' : ''}`}>
+            {m.footTitle}
+            {m.footSmall && <small>{m.footSmall}</small>}
+          </div>
+        )}
 
       </div>
     </section>

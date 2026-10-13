@@ -1481,3 +1481,9 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 
 .bio-ed-p a { color: var(--accent); border-bottom: 1px solid rgba(217,43,58,.4); }
 .bio-ed-p a:hover { border-bottom-color: var(--accent); }
+
+.mem-memories { max-width: 760px; margin: 0 auto 80px; }
+.mem-memories-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+.mem-memories p { font-size: 16px; line-height: 1.9; color: #a39d92; margin: 0 0 20px; }
+.mem-memories p strong, .mem-memories p em { color: #f4f1ec; }
+.mem-copy p a, .mem-memories p a { color: var(--accent); border-bottom: 1px solid rgba(217,43,58,.4); }
