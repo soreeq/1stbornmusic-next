@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { usePlayer } from '../contexts/PlayerContext';
-import { IconLoop, IconBag } from './Icons';
+import { IconLoop, IconBag, IconPlay, IconPause, IconSkipB, IconSkipF } from './Icons';
 import LicenseModal from './LicenseModal';
 import Waveform from './Waveform';
 
@@ -87,11 +87,11 @@ export default function AudioPlayer() {
           {/* ── TRANSPORT ── */}
           <div className="ap-center">
             <div className="ap-btns">
-              <button className="ap-skip" onClick={handlePrev} aria-label="Previous">⏮</button>
-              <button className="ap-play-main" onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
-                {isPlaying ? '❚❚' : '▶'}
+              <button className="ap-skip" onClick={handlePrev} aria-label="Previous beat"><IconSkipB /></button>
+              <button className={`ap-play-main${isPlaying ? '' : ' is-play'}`} onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
+                {isPlaying ? <IconPause /> : <IconPlay />}
               </button>
-              <button className="ap-skip" onClick={handleNext} aria-label="Next">⏭</button>
+              <button className="ap-skip" onClick={handleNext} aria-label="Next beat"><IconSkipF /></button>
             </div>
           </div>
 
