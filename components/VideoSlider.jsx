@@ -16,7 +16,7 @@ export default function VideoSlider({ videoIds, beats, onTabChange }) {
       clearInterval(timerRef.current);
       timerRef.current = setInterval(() => setCurrent(c => (c + 1) % YOUTUBE_IDS.length), 10000);
     }
-  }, []);
+  }, [YOUTUBE_IDS.length]);
 
   useEffect(() => {
     mutedRef.current = muted;
@@ -26,7 +26,7 @@ export default function VideoSlider({ videoIds, beats, onTabChange }) {
       clearInterval(timerRef.current);
     }
     return () => clearInterval(timerRef.current);
-  }, [muted]);
+  }, [muted, YOUTUBE_IDS.length]);
 
   return (
     <div className="vslider">
