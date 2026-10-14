@@ -88,7 +88,7 @@ export function PlayerProvider({ beats, children }) {
 
   return (
     <PlayerContext.Provider value={{
-      currentBeat, isPlaying, isLooping, progress, duration, volume,
+      currentBeat, isPlaying, isLooping, progress, duration, volume, audioRef,
       handlePlay, handlePrev, handleNext, handleSeek,
       setIsLooping, setVolume,
       togglePlay: () => setIsPlaying(p => !p),
