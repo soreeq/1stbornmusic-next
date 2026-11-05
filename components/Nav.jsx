@@ -17,12 +17,13 @@ export default function Nav({ tab, setTab }) {
 
   return (
     <>
-      <header className="nav-logo-section">
+      <header className="nav-logo-section nav-logo-section--wordmark">
         <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} onClick={() => setTab('projects')}>
           <Image
-            src="/logo.png"
-            alt="1stBornMusic"
+            src="/logo-gold.jpg"
+            alt="1stBornMusic — Undeniable"
             fill
+            sizes="(max-width: 900px) 90vw, 720px"
             style={{ objectFit: 'contain', objectPosition: 'center' }}
             priority
           />
